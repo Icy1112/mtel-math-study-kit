@@ -16,7 +16,7 @@ A free study kit for the **MTEL Mathematics (Field 63)** test, which licenses ma
 
 | File | Use it to |
 |---|---|
-| `index.html` | **Start here.** The study app: Plan checklist, Concepts (plain words, short videos, interactive visuals, 3 worked examples per topic), Flashcards, Practice (drills, 20-question diagnostic, 85-question timed mock) and Open-response practice. Open it in any browser. |
+| `index.html` | **Start here.** The study app: Plan checklist, Concepts (plain words, short videos, interactive visuals, 3 worked examples per topic), Flashcards, Cheat sheet (135 step-by-step recipes), Practice (300 questions: drills, 20-question diagnostic, 85-question timed mock with history; new questions come first) and Open response (12 tasks with rubric and model answers). Open it in any browser. |
 | `visuals.js` | The 18 interactive "See it" visuals (sliders and graphs), drawn with plain canvas. |
 | `study-plan.md` | Read the 8-week plan, the study method, the 4-week triage track and test-day pacing. |
 | `resources.md` | Find the best free link for each topic (official MTEL, Khan Academy, OpenStax, Paul's Notes, 3Blue1Brown) and 62 short videos by topic. |
@@ -32,5 +32,5 @@ A free study kit for the **MTEL Mathematics (Field 63)** test, which licenses ma
 ## Notes
 
 - The practice questions are original and written for this kit. They are not official MTEL questions. A practice % is only a rough guide: aim for 75% or more before test day.
-- Progress (checkboxes, flashcard boxes, scores) is saved in your browser only. If you clear site data or change browsers, it resets.
+- Progress (checkboxes, flashcard boxes, scores, seen questions, drafts) is saved automatically in your browser only. Each device and each site (GitHub Pages, local file) keeps its own progress. To move it, use **Plan → Your progress → Copy backup code**, then paste it on the other device.
 - Use the official full practice test in week 7. It is the best predictor you have.

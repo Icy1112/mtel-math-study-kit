@@ -28,6 +28,15 @@ Every new topic in the plan says **(Watch → See it → Examples)**. In the app
 | 4. Drill | 20–30 min | Practice questions on the topic. Sketch a quick graph or diagram for every question, even if it seems easy. |
 | 5. Cards | 10 min | Flashcards. |
 
+Stuck on a problem type? Open the **Cheat sheet** tab. Each recipe gives: how to spot the type, the formula, the steps, a worked line, and the common variations ("If … → Do …").
+
+## Weekly tests
+
+- **Every Sunday (weeks 2–6): one full mock (85 questions, 3 hours).** The app gives you questions you have not seen first. The bank of 300 gives about 3½ completely fresh mocks; after that, the least-seen and previously missed questions come back.
+- **Week 7:** the official practice test. **Week 8:** a final in-app mock.
+- The **Practice** tab keeps your test history and a score trend line. Aim for 75%+ before test day.
+- **Open response:** one task each week (12 tasks in the app). Use "Pick one for me", write for 30 minutes, then score yourself with the rubric and compare with the model answer.
+
 ## How to study (the method)
 
 1. **Read, then close the book.** Read the Concepts card. Then write the key ideas from memory. Recall (pulling it out of your head) builds memory much better than rereading.
@@ -81,10 +90,10 @@ Objectives: 0004, 0005, 0002
 | Mon | Concepts 0004 (Watch → See it → Examples): function notation, domain, range, composition, inverses ([Khan Algebra 2](https://www.khanacademy.org/math/algebra2)). |
 | Tue | 0004: graph transformations; arithmetic and geometric sequences and series. Drill 0004. |
 | Wed | Concepts 0005 (Watch → See it → Examples): slope, linear models, proportional reasoning; vertex form and the axis of symmetry. Graph each example on [Desmos](https://www.desmos.com/calculator). |
-| Thu | 0005: linear and linear-quadratic systems; linear programming (best value at a corner of the feasible region). Drill 0005. |
+| Thu | **Open response:** use "Pick one for me" (30 min, then self-score). 0005: linear and linear-quadratic systems; linear programming (best value at a corner of the feasible region). Drill 0005. |
 | Fri | Concepts 0002 (Watch → See it → Examples): complex arithmetic, polar form, De Moivre's theorem ([Khan Precalculus](https://www.khanacademy.org/math/precalculus), complex numbers unit). |
 | Sat | 0002: matrices, determinants, inverses, vectors and dot product. Optional: [3Blue1Brown linear algebra](https://www.3blue1brown.com/topics/linear-algebra) ch. 1–3. Drill 0002, then a Subarea I drill. (3 h) |
-| Sun | Light day. Flashcards: clear every due card (10 min). Redo every question in your error log. Cover the answer and solve it again. |
+| Sun | **Weekly full mock (85)**, 3 h, in one sitting. New questions come first. Then redo every miss and add it to your error log. |
 
 ### Week 3: Exponents, logs, polynomials, rational functions (13 h)
 Objectives: 0006, 0007
@@ -97,7 +106,7 @@ Objectives: 0006, 0007
 | Thu | 0007: rational functions (vertical, horizontal and slant asymptotes, holes), sign charts; direct, inverse and joint variation. |
 | Fri | 0007: partial fractions; radical equations. Drill 0007. |
 | Sat | **Open response 1** (Open response tab): 30 min timed. Then compare with the model answer and score yourself with the rubric. Then a mixed Subarea II drill. (3 h) |
-| Sun | Light day. Flashcards: clear every due card (10 min). Redo every question in your error log. Cover the answer and solve it again. |
+| Sun | **Weekly full mock (85)**, 3 h, in one sitting. New questions come first. Then redo every miss and add it to your error log. |
 
 ### Week 4: Trigonometry and Euclidean geometry (13 h)
 Objectives: 0008, 0009, 0010
@@ -110,7 +119,7 @@ Objectives: 0008, 0009, 0010
 | Thu | Concepts 0009 (Watch → See it → Examples): unit conversion, dimensional analysis, log scales, precision and error. Drill 0009. |
 | Fri | Concepts 0010 (Watch → See it → Examples): angles, parallel lines, congruence and similarity, two-column and indirect proof ([Khan Geometry](https://www.khanacademy.org/math/geometry)). |
 | Sat | 0010: Law of Sines and Cosines, polygons, circle theorems, [constructions](https://www.mathopenref.com/tocs/constructionstoc.html). Drill 0010. **Open response 2**, 30 min timed. (3 h) |
-| Sun | Light day. Flashcards: clear every due card (10 min). Mixed drill for all of Subarea II. |
+| Sun | **Weekly full mock (85)**, 3 h, in one sitting. New questions come first. Then redo every miss and add it to your error log. |
 
 ### Week 5: 3D, coordinates, probability, statistics (13 h)
 Objectives: 0011, 0012, 0013, 0014
@@ -123,7 +132,7 @@ Objectives: 0011, 0012, 0013, 0014
 | Thu | Concepts 0013 (Watch → See it → Examples): probability rules, conditional probability, two-way tables, binomial, normal and z-scores, expected value ([Khan Stats & Probability](https://www.khanacademy.org/math/statistics-probability)). Drill 0013. |
 | Fri | Concepts 0014 (Watch → See it → Examples): sampling and bias, center and spread, box plots, regression and residuals, confidence intervals and hypothesis tests. Drill 0014. |
 | Sat | Mixed drills: Subarea III, then Subarea IV. Write Open response 1 again from memory, without the model answer. (3 h) |
-| Sun | Light day. Flashcards: clear every due card (10 min). Redo every question in your error log. Cover the answer and solve it again. |
+| Sun | **Weekly full mock (85)**, 3 h, in one sitting. New questions come first. Then redo every miss and add it to your error log. |
 
 ### Week 6: Calculus and discrete math (15 h)
 Objectives: 0015, 0016, 0017
@@ -133,10 +142,10 @@ Objectives: 0015, 0016, 0017
 | Mon | Concepts 0015 (Watch → See it → Examples): limits and continuity. Watch [3Blue1Brown Essence of Calculus](https://www.3blue1brown.com/topics/calculus) ep. 1–2. |
 | Tue | 0015: derivative rules (power, product, quotient, chain) and derivatives of trig, exp and log ([Paul's Calculus I](https://tutorial.math.lamar.edu/Classes/CalcI/CalcI.aspx)). |
 | Wed | 0015: tangent lines, optimization, related rates, curve analysis, Mean Value Theorem, L'Hôpital. Drill 0015. |
-| Thu | Concepts 0016 (Watch → See it → Examples): Riemann sums, the Fundamental Theorem, antiderivatives, u-substitution. |
+| Thu | **Open response:** use "Pick one for me" (30 min, then self-score). Concepts 0016 (Watch → See it → Examples): Riemann sums, the Fundamental Theorem, antiderivatives, u-substitution. |
 | Fri | 0016: area between curves, volume (disk and washer), displacement vs total distance ([Khan AP Calc AB](https://www.khanacademy.org/math/ap-calculus-ab)). Drill 0016. |
 | Sat | Concepts 0017 (Watch → See it → Examples): sets, logic, counting, induction, graphs and trees ([Levin, Discrete Mathematics](https://discrete.openmathbooks.org/dmoi3/)). Drill 0017, then a Subarea IV drill. (3–4 h) |
-| Sun | Light day. Flashcards: clear every due card (10 min). Redo every question in your error log. Cover the answer and solve it again. |
+| Sun | **Weekly full mock (85)**, 3 h, in one sitting. New questions come first. Then redo every miss and add it to your error log. |
 
 ### Week 7: Official full practice test (12 h)
 
@@ -145,7 +154,7 @@ Objectives: 0015, 0016, 0017
 | Mon | Flashcards: clear every due card (10 min). Drill the 2 weakest objectives in the "Your weak areas" strip on the Practice tab. |
 | Tue | Reread Concepts for the next 2 weakest objectives and drill them. |
 | Wed | Read the [official test strategies](https://www.mtel.nesinc.com/Content/StudyGuide/MA_SG_strategies_63.asp) and the [calculator tutorial](https://www.mtel.nesinc.com/Content/Docs/calculator_tutorial.pdf). Skim the [formula sheet](https://www.mtel.nesinc.com/Content/Docs/MTEL_63_Formulas.pdf) so you know what the test gives you. |
-| Thu | Mixed diagnostic (20). Redo every question in your error log. Cover the answer and solve it again. |
+| Thu | **Open response:** use "Pick one for me" (30 min, then self-score). Mixed diagnostic (20). Redo every question in your error log. Cover the answer and solve it again. |
 | Fri | Rest. Sleep well. |
 | Sat | Take the [official full practice test](https://www.mtel.nesinc.com/content/PracticeTest/MA063_PracticeTest_85.html) (85 + 2) in one 4-hour sitting. Use only a basic scientific calculator. |
 | Sun | Score it. Log every miss by objective, and write the fix for each one. |

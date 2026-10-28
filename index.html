@@ -143,6 +143,24 @@ mjx-container.wide{display:block;overflow-x:auto;overflow-y:hidden;padding:2px 0
 .vctl .vv{font-family:var(--f-mono);font-variant-numeric:tabular-nums;font-weight:600}
 .vro{font-family:var(--f-mono);font-size:.85rem;margin:6px 0 0;padding:6px 8px;background:var(--accent-soft);border-radius:6px;overflow-x:auto;white-space:pre-wrap}
 .exlab{font-size:.85rem;margin:14px 0 0}
+.rcp{margin:10px 0}
+.rcp h4{margin:0 0 4px;font-size:1.05rem}
+.rcp p{margin:.35rem 0}
+.rcp .rsteps{margin:.4rem 0}
+.rcp .var{margin:.25rem 0;padding-left:8px;border-left:3px solid var(--line)}
+.rcp .trap{color:var(--bad)}
+.rlist.compact .rx-more{display:none}
+.rtools{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px 16px;align-items:end;margin:8px 0}
+.rtools input[type=search]{width:100%;padding:8px 10px;border:1.5px solid var(--ink);border-radius:8px;background:var(--paper)}
+.orrow{display:grid;grid-template-columns:1fr auto;gap:2px 12px;width:100%;text-align:left;min-height:56px;padding:8px 12px;border:1.5px solid var(--line);border-radius:10px;background:var(--paper);cursor:pointer;margin:6px 0}
+.orrow:hover{background:var(--accent-soft);border-color:var(--accent)}
+.orrow .ot{font-weight:700}
+.orrow .os{font-family:var(--f-mono);font-size:.82rem;text-align:right;align-self:center}
+.orrow .ox{font-size:.85rem;color:var(--muted)}
+.hist table{min-width:460px}
+.trend{width:100%;max-width:320px;height:auto;display:block;margin:8px 0}
+.donechk{display:flex;gap:8px;align-items:center;min-height:44px;cursor:pointer}
+.donechk input{width:22px;height:22px;accent-color:var(--accent)}
 .linkli{margin:.4rem 0}
 @media (min-width:820px){
   .split{display:grid;grid-template-columns:300px 1fr;gap:20px;align-items:start}
@@ -235,14 +253,21 @@ window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]},svg
 <script src="data/links.js"></script>
 <script src="data/obj-I-II.js"></script>
 <script src="data/obj-III-IV.js"></script>
+<script src="data/q-more-1.js"></script>
+<script src="data/q-more-2.js"></script>
+<script src="data/q-more-3.js"></script>
+<script src="data/q-more-4.js"></script>
+<script src="data/recipes-I-II.js"></script>
+<script src="data/recipes-III-IV.js"></script>
 <script src="data/open-response.js"></script>
+<script src="data/open-response-more.js"></script>
 <script src="data/videos.js"></script>
 <script src="visuals.js"></script>
 <script>
 (function(){
 'use strict';
 var M=window.MTEL||{};
-['objectives','questions','cards','plan','links','openResponse','videos','visuals'].forEach(function(k){M[k]=M[k]||[]});
+['objectives','questions','cards','plan','links','openResponse','videos','visuals','recipes'].forEach(function(k){M[k]=M[k]||[]});
 
 var SUBS={
   I:{n:'Number Sense and Operations',w:10},
@@ -251,7 +276,7 @@ var SUBS={
   IV:{n:'Probability, Statistics, Calculus, and Discrete Mathematics',w:20},
   V:{n:'Integration of Knowledge',w:20}
 };
-var TABS=[['plan','Plan'],['concepts','Concepts'],['cards','Flashcards'],['practice','Practice'],['open','Open response'],['links','Links']];
+var TABS=[['plan','Plan'],['concepts','Concepts'],['cards','Flashcards'],['recipes','Cheat sheet'],['practice','Practice'],['open','Open response'],['links','Links']];
 var RUB=[
   ['4','Thorough knowledge of the subject; purpose fully achieved; accurate, substantial application; high-quality support; comprehensive reasoning.'],
   ['3','Adequate knowledge; purpose largely achieved; generally accurate application; acceptable support; adequate reasoning.'],
@@ -299,7 +324,7 @@ function wkStat(w,done){var d=w.days||[],n=0;d.forEach(function(_,i){if(done[pk(
 function barHtml(n,t,attr,label){return '<div class="bar" role="progressbar" aria-label="'+label+'" aria-valuemin="0" aria-valuemax="'+t+'" aria-valuenow="'+n+'" '+attr+'><i style="width:'+(t?100*n/t:0)+'%"></i></div>'}
 function setBar(el,n,t){if(!el)return;el.setAttribute('aria-valuenow',n);el.setAttribute('aria-valuemax',t);el.firstElementChild.style.width=(t?100*n/t:0)+'%'}
 R.plan=function(){
-  if(!M.plan.length) return '<h2>Plan</h2>'+empty('The study plan is not loaded yet.');
+  if(!M.plan.length) return '<h2>Plan</h2>'+empty('The study plan is not loaded yet.')+bkBox();
   var done=LS.get('plan',{}), N=0, T=0;
   M.plan.forEach(function(w){var s=wkStat(w,done);N+=s.n;T+=s.t});
   var open=-1; M.plan.some(function(w,i){var s=wkStat(w,done);if(s.n<s.t){open=i;return true}});
@@ -313,7 +338,7 @@ R.plan=function(){
       return '<li><label class="day" for="chk-'+k+'"><input type="checkbox" id="chk-'+k+'" data-chg="day" data-k="'+k+'"'+(done[k]?' checked':'')+'><span class="dn">'+d.day+'</span><span class="dt">'+d.task+'</span></label></li>';
     }).join('')+'</ul></div></details>';
   });
-  return h;
+  return h+bkBox();
 };
 function updPlan(){
   var done=LS.get('plan',{}), N=0, T=0;
@@ -339,6 +364,8 @@ function detail(o){
   }).join('')+'</section>';
   if(L(o.keyIdeas)) h+='<section><h3>Key ideas</h3><ul>'+o.keyIdeas.map(function(x){return '<li>'+x+'</li>'}).join('')+'</ul></section>';
   if(L(o.formulas)) h+='<section><h3>Formulas</h3><div class="formulas">'+o.formulas.map(function(x){return '<div class="fx">'+x+'</div>'}).join('')+'</div></section>';
+  var rcs=M.recipes.filter(function(r){return r.obj===o.id});
+  if(rcs.length) h+='<section><h3>Recipes</h3>'+rcs.map(recCard).join('')+'<div class="row"><button class="btn ghost" data-act="rcopen" data-id="'+o.id+'">Open in Cheat sheet</button></div></section>';
   var exs=(o.example?[o.example]:[]).concat(o.moreExamples||[]);
   if(exs.length){
     h+='<section><h3>Worked example'+(exs.length>1?'s':'')+'</h3>'+exs.map(function(ex,i){
@@ -445,9 +472,33 @@ var P={mode:'drill',drillSel:'',sess:null,msg:''};
 var mkItem=function(q){return {q:q,perm:shuffle(q.choices.map(function(_,i){return i})),pick:null,flag:false}};
 var right=function(it){return it.pick!=null&&it.perm[it.pick]===it.q.answer};
 var LET='ABCDEFGH';
+var qid=function(q){return q.id||q.obj+'|'+q.q};
+/* new questions first, then least seen, then most often missed; random inside ties */
+function rank(pool){var qh=LS.get('qh',{});return shuffle(pool).sort(function(a,b){var x=qh[qid(a)]||{n:0,w:0},y=qh[qid(b)]||{n:0,w:0};return x.n-y.n||y.w-x.w})}
+function recQ(items){
+  var qh=LS.get('qh',{}),t=Date.now();
+  items.forEach(function(it){var k=qid(it.q),e=qh[k]||(qh[k]={n:0,w:0,last:0});e.n++;if(!right(it))e.w++;e.last=t});
+  LS.set('qh',qh);
+}
+function histHtml(){
+  var hs=LS.get('history',[]), h='<section class="card hist"><h3 style="margin-top:0">Your test history</h3>';
+  if(!hs.length) h+='<p class="muted">No tests yet. Your submitted mocks and diagnostics will appear here.</p>';
+  else{
+    h+='<div class="tbl"><table><thead><tr><th>Date</th><th>Test</th><th>Score</th><th>I</th><th>II</th><th>III</th><th>IV</th></tr></thead><tbody>'+hs.slice().reverse().slice(0,15).map(function(r){
+      var sp=function(k){var v=(r.subs||{})[k];return v&&v[1]?pct(v[0],v[1])+'%':'–'};
+      return '<tr><td class="mono">'+esc(String(r.date).slice(0,10))+'</td><td>'+(r.kind==='mock'?'Full mock':'Diagnostic')+'</td><td class="mono">'+(+r.score||0)+'% ('+(+r.correct||0)+'/'+(+r.total||0)+')</td><td class="mono">'+sp('I')+'</td><td class="mono">'+sp('II')+'</td><td class="mono">'+sp('III')+'</td><td class="mono">'+sp('IV')+'</td></tr>';
+    }).join('')+'</tbody></table></div>';
+    var mk=hs.filter(function(r){return r.kind==='mock'});
+    if(mk.length>=2){
+      var W=220,H=60,n=mk.length,pt=mk.map(function(r,i){return [8+i*(W-16)/(n-1),H-6-(H-12)*Math.max(0,Math.min(100,+r.score||0))/100]});
+      h+='<svg class="trend" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Mock score trend: '+mk.map(function(r){return (+r.score||0)+'%'}).join(', ')+'"><line x1="0" x2="'+W+'" y1="'+(H-6-(H-12)*0.75)+'" y2="'+(H-6-(H-12)*0.75)+'" style="stroke:var(--muted)" stroke-dasharray="4 3"/><text x="2" y="'+(H-6-(H-12)*0.75-2)+'" font-size="8" style="fill:var(--muted)">75%</text><polyline fill="none" stroke-width="2" style="stroke:var(--accent)" points="'+pt.map(function(q){return q[0].toFixed(1)+','+q[1].toFixed(1)}).join(' ')+'"/>'+pt.map(function(q){return '<circle cx="'+q[0].toFixed(1)+'" cy="'+q[1].toFixed(1)+'" r="3" style="fill:var(--accent)"/>'}).join('')+'</svg><p class="muted">Mock scores over time.</p>';
+    }
+  }
+  return h+'<p class="note">Take one full mock each week. New questions come first.</p></section>';
+}
 function weakStrip(){
   var st=LS.get('stats',{}), arr=[];
-  Object.keys(st).forEach(function(id){if(st[id].a)arr.push({id:id,c:st[id].c,a:st[id].a,p:pct(st[id].c,st[id].a)})});
+  Object.keys(st).forEach(function(id){if(/^\d{4}$/.test(id)&&st[id]&&st[id].a)arr.push({id:id,c:st[id].c,a:st[id].a,p:pct(st[id].c,st[id].a)})});
   arr.sort(function(x,y){return x.p-y.p||y.a-x.a});
   var h='<div class="weak"><strong>Your weak areas</strong>';
   if(!arr.length) return h+'<span class="muted">Take a diagnostic or a mock test to find them.</span></div>';
@@ -463,7 +514,9 @@ R.practice=function(){
   var h='<h2>Practice</h2>'+weakStrip();
   h+='<div class="modes" role="group" aria-label="Practice mode">'+[['drill','Drill'],['diag','Diagnostic (20)'],['mock','Full mock (85)']].map(function(m){return '<button class="btn" data-act="mode" data-m="'+m[0]+'" aria-pressed="'+(P.mode===m[0])+'">'+m[1]+'</button>'}).join('')+'</div>';
   var cnt={}; M.questions.forEach(function(q){var k=qSub(q);if(k)cnt[k]=(cnt[k]||0)+1});
-  var bank=Object.keys(SUBS).filter(function(k){return cnt[k]}).map(function(k){return k+': '+cnt[k]}).join(' · ');
+  var qh=LS.get('qh',{}), unseen={}, unseenAll=0;
+  M.questions.forEach(function(q){if(!qh[qid(q)]){unseenAll++;var k=qSub(q);if(k)unseen[k]=(unseen[k]||0)+1}});
+  var bank=Object.keys(SUBS).filter(function(k){return cnt[k]}).map(function(k){return k+': '+cnt[k]+' ('+(unseen[k]||0)+' unseen)'}).join(' · ');
   if(P.msg) h+='<p class="note">'+P.msg+'</p>';
   if(P.mode==='drill'){
     var qn={}; M.questions.forEach(function(q){qn[q.obj]=(qn[q.obj]||0)+1});
@@ -476,7 +529,7 @@ R.practice=function(){
   }else{
     h+='<div class="card"><p><strong>Full mock, 85 questions.</strong> Mix: 11 from I, 32 from II, 21 from III, 21 from IV. Timer: <span class="mono">3:00:00</span>, the multiple-choice share of the 4-hour test. No feedback until you submit.</p><button class="btn primary" id="b-start" data-act="start">Start full mock</button></div>';
   }
-  h+='<p class="muted mono">Question bank — '+(bank||'none yet')+'</p>';
+  h+='<p class="muted mono">Question bank: '+M.questions.length+' · unseen: '+unseenAll+(bank?' — '+bank:'')+'</p>'+histHtml();
   return h;
 };
 CHG.drillsel=function(t){P.drillSel=t.value};
@@ -489,13 +542,13 @@ function startSess(){
     var p=P.drillSel.split(':'), t=p[0], v=p[1];
     var pool=M.questions.filter(function(q){return t==='obj'?q.obj===v:qSub(q)===v});
     if(!pool.length){P.msg='No questions for that choice yet.';return paint()}
-    P.sess={kind:'drill',label:t==='obj'?'Objective '+v:'Subarea '+v,items:shuffle(pool).map(mkItem),i:0,done:false};
+    P.sess={kind:'drill',label:t==='obj'?'Objective '+v:'Subarea '+v,items:rank(pool).map(mkItem),i:0,done:false};
   }else{
     var W=P.mode==='diag'?{I:3,II:7,III:5,IV:5}:{I:11,II:32,III:21,IV:21}, pick=[], short=[];
     Object.keys(W).forEach(function(k){
       var pool=M.questions.filter(function(q){return qSub(q)===k});
       if(pool.length<W[k]) short.push(k+': '+pool.length+' of '+W[k]);
-      pick=pick.concat(shuffle(pool).slice(0,W[k]));
+      pick=pick.concat(rank(pool).slice(0,W[k]));
     });
     if(!pick.length){P.msg='There are no questions to build this test yet.';return paint()}
     P.sess={kind:P.mode,items:shuffle(pick).map(mkItem),i:0,done:false,confirm:false,
@@ -550,7 +603,7 @@ function examView(s){
 }
 ACT.pick=function(b){
   var s=P.sess; if(!s||s.done) return; var it=s.items[s.i], i=+b.dataset.i;
-  if(s.kind==='drill'){ if(it.pick!=null) return; it.pick=i; }
+  if(s.kind==='drill'){ if(it.pick!=null) return; it.pick=i; recQ([it]); }
   else it.pick=(it.pick===i?null:i);
   paint();
   if(s.kind==='drill'){var nx=$('#b-next'); if(nx) nx.focus()}
@@ -571,9 +624,16 @@ ACT.back=function(){P.sess=null;P.msg='';paint();window.scrollTo(0,0)};
 function topOfQ(){var q=$('#qtop');if(q){q.scrollIntoView({block:'start'});q.focus({preventScroll:true})}}
 function finish(s){
   if(s.done) return; s.done=true; s.confirm=false;
-  var st=LS.get('stats',{});
-  s.items.forEach(function(it){var o=st[it.q.obj]||(st[it.q.obj]={c:0,a:0});o.a++;if(right(it))o.c++});
-  LS.set('stats',st);
+  var st=LS.get('stats',{}), subs={}, c=0;
+  s.items.forEach(function(it){
+    var ok=right(it), o=st[it.q.obj]||(st[it.q.obj]={c:0,a:0}), k=qSub(it.q);
+    o.a++; if(ok){o.c++;c++}
+    if(k){var e=subs[k]||(subs[k]=[0,0]);e[1]++;if(ok)e[0]++}
+  });
+  LS.set('stats',st); recQ(s.items);
+  var hs=LS.get('history',[]).slice(), n=s.items.length;
+  hs.push({kind:s.kind,date:new Date().toISOString(),score:pct(c,n),correct:c,total:n,subs:subs});
+  LS.set('history',hs);
 }
 function results(s){
   var n=s.items.length, c=s.items.filter(right).length;
@@ -604,21 +664,47 @@ function results(s){
 /* ---------- Open response ---------- */
 var OT={};
 function orBtn(id){var o=OT[id];return o.run?'Pause':(o.left<=0?'Time is up':(o.left<1800?'Resume':'Start 30:00 timer'))}
+var OS={sel:null,flt:'all',msg:''};
+var orType=function(o){return o==='0018'?'Formula-based':o==='0019'?'Real-world':''};
+function orStatus(t){
+  if(LS.get('ordone',{})[t.id]){var sc=+LS.get('orscore',{})[t.id]||0;return 'Done'+(sc?' · score '+sc:' · not scored')}
+  return LS.get('draft:'+t.id,'')?'Draft saved':'Not started';
+}
+function orTask(t){
+  var o=OT[t.id]||(OT[t.id]={left:(t.minutes||30)*60,run:false}), chk=LS.get('orchk',{}), sc=LS.get('orscore',{})[t.id]||'', dn=!!LS.get('ordone',{})[t.id];
+  return '<article class="card" id="or-'+t.id+'"><p class="kick mono">Objective '+t.objective+' '+orType(t.objective)+' · '+(t.minutes||30)+' minutes</p><h2 style="margin-top:2px">'+t.title+'</h2><div class="prose">'+t.prompt+'</div><ol>'+(t.tasks||[]).map(function(x){return '<li>'+x+'</li>'}).join('')+'</ol>'+
+    '<div class="row"><span class="ortimer mono" data-ortime="'+t.id+'" role="timer">'+fmtS(o.left)+'</span><button class="btn" data-act="ortimer" data-id="'+t.id+'">'+orBtn(t.id)+'</button><button class="btn ghost" data-act="orreset" data-id="'+t.id+'">Reset timer</button><span class="muted">Optional.</span></div>'+
+    '<label class="lbl" for="draft-'+t.id+'">Your draft (saved on this device)</label><textarea id="draft-'+t.id+'" data-inp="draft" data-id="'+t.id+'" placeholder="Write your response here. Label each part.">'+esc(LS.get('draft:'+t.id,''))+'</textarea>'+
+    '<details class="rubricbox"><summary class="btn ghost" style="display:inline-block">Official rubric: score 4, 3, 2, 1</summary><div class="tbl"><table class="rubric"><thead><tr><th>Score</th><th>Traits: Purpose · Subject knowledge · Support · Rationale</th></tr></thead><tbody>'+RUB.map(function(r){return '<tr><td>'+r[0]+'</td><td>'+r[1]+'</td></tr>'}).join('')+'</tbody></table></div><p class="muted">Purpose: does the response do what the task asks. Subject knowledge: accurate math. Support: work and examples. Rationale: clear reasoning.</p></details>'+
+    '<h3>Self-check</h3><ul class="checks">'+(t.checklist||[]).map(function(x,i){var k=t.id+'#'+i;return '<li><label for="ck-'+t.id+'-'+i+'"><input type="checkbox" id="ck-'+t.id+'-'+i+'" data-chg="orchk" data-k="'+k+'"'+(chk[k]?' checked':'')+'><span>'+x+'</span></label></li>'}).join('')+'</ul>'+
+    '<div class="row"><button class="btn" id="mbtn-'+t.id+'" data-act="ormodel" data-id="'+t.id+'" aria-expanded="false">Show model answer</button></div><div class="model" id="model-'+t.id+'" hidden>'+t.modelAnswer+'</div>'+
+    '<div class="row"><div><label class="lbl" for="orscore-'+t.id+'">Self-score (1–4)</label><select id="orscore-'+t.id+'" data-chg="orscore" data-id="'+t.id+'"><option value="">Not scored</option>'+[1,2,3,4].map(function(n){return '<option value="'+n+'"'+(String(sc)===String(n)?' selected':'')+'>'+n+'</option>'}).join('')+'</select></div>'+
+    '<label class="donechk" for="ordone-'+t.id+'"><input type="checkbox" id="ordone-'+t.id+'" data-chg="ordone" data-id="'+t.id+'"'+(dn?' checked':'')+'> Mark as done</label></div></article>';
+}
 R.open=function(){
   if(!M.openResponse.length) return '<h2>Open response</h2>'+empty('The open-response tasks are not loaded yet.');
   var h='<h2>Open response</h2><div class="card"><h3 style="margin-top:0">How to write a 4</h3><ul>'+
     '<li>Answer every bullet in order, and label each part.</li><li>Define your variables.</li><li>Show every step.</li><li>Label the graph: axes, units and key points.</li><li>State the final answer in a sentence with units.</li><li>Explain what a parameter change does.</li></ul></div>';
-  var chk=LS.get('orchk',{});
-  M.openResponse.forEach(function(t){
-    var o=OT[t.id]||(OT[t.id]={left:(t.minutes||30)*60,run:false});
-    h+='<article class="card" id="or-'+t.id+'"><p class="kick mono">Objective '+t.objective+' · '+(t.minutes||30)+' minutes</p><h2 style="margin-top:2px">'+t.title+'</h2><div class="prose">'+t.prompt+'</div><ol>'+(t.tasks||[]).map(function(x){return '<li>'+x+'</li>'}).join('')+'</ol>'+
-      '<div class="row"><span class="ortimer mono" data-ortime="'+t.id+'" role="timer">'+fmtS(o.left)+'</span><button class="btn" data-act="ortimer" data-id="'+t.id+'">'+orBtn(t.id)+'</button><button class="btn ghost" data-act="orreset" data-id="'+t.id+'">Reset timer</button><span class="muted">Optional.</span></div>'+
-      '<label class="lbl" for="draft-'+t.id+'">Your draft (saved on this device)</label><textarea id="draft-'+t.id+'" data-inp="draft" data-id="'+t.id+'" placeholder="Write your response here. Label each part.">'+esc(LS.get('draft:'+t.id,''))+'</textarea>'+
-      '<details class="rubricbox"><summary class="btn ghost" style="display:inline-block">Official rubric: score 4, 3, 2, 1</summary><div class="tbl"><table class="rubric"><thead><tr><th>Score</th><th>Traits: Purpose · Subject knowledge · Support · Rationale</th></tr></thead><tbody>'+RUB.map(function(r){return '<tr><td>'+r[0]+'</td><td>'+r[1]+'</td></tr>'}).join('')+'</tbody></table></div><p class="muted">Purpose: does the response do what the task asks. Subject knowledge: accurate math. Support: work and examples. Rationale: clear reasoning.</p></details>'+
-      '<h3>Self-check</h3><ul class="checks">'+(t.checklist||[]).map(function(x,i){var k=t.id+'#'+i;return '<li><label for="ck-'+t.id+'-'+i+'"><input type="checkbox" id="ck-'+t.id+'-'+i+'" data-chg="orchk" data-k="'+k+'"'+(chk[k]?' checked':'')+'><span>'+x+'</span></label></li>'}).join('')+'</ul>'+
-      '<div class="row"><button class="btn" id="mbtn-'+t.id+'" data-act="ormodel" data-id="'+t.id+'" aria-expanded="false">Show model answer</button></div><div class="model" id="model-'+t.id+'" hidden>'+t.modelAnswer+'</div></article>';
-  });
+  var t=OS.sel&&M.openResponse.filter(function(x){return x.id===OS.sel})[0];
+  if(t) return h+'<div class="row"><button class="btn" data-act="orback">&larr; All tasks</button></div>'+orTask(t);
+  var fl=[['all','All tasks'],['0018','0018 Formula-based'],['0019','0019 Real-world'],['todo','Not done']];
+  h+='<div class="rtools"><div><label class="lbl" for="or-flt">Show</label><select id="or-flt" data-chg="orflt">'+fl.map(function(f){return '<option value="'+f[0]+'"'+(OS.flt===f[0]?' selected':'')+'>'+f[1]+'</option>'}).join('')+'</select></div><div><button class="btn primary" data-act="orpick">Pick one for me</button></div></div>';
+  if(OS.msg) h+='<p class="note">'+OS.msg+'</p>';
+  var done=LS.get('ordone',{}), list=M.openResponse.filter(function(x){return OS.flt==='all'||(OS.flt==='todo'?!done[x.id]:x.objective===OS.flt)});
+  h+=list.length?list.map(function(x){
+    return '<button class="orrow" data-act="orsel" data-id="'+x.id+'"><span class="ot">'+x.title+'</span><span class="os">'+orStatus(x)+'</span><span class="ox mono">'+x.objective+' '+orType(x.objective)+' · '+(x.minutes||30)+' min</span></button>';
+  }).join(''):'<p class="muted">No tasks match this filter.</p>';
   return h;
+};
+CHG.orflt=function(t){OS.flt=t.value;OS.msg='';paint()};
+CHG.orscore=function(t){var d=LS.get('orscore',{});if(t.value)d[t.dataset.id]=+t.value;else delete d[t.dataset.id];LS.set('orscore',d)};
+CHG.ordone=function(t){var d=LS.get('ordone',{});if(t.checked)d[t.dataset.id]=1;else delete d[t.dataset.id];LS.set('ordone',d)};
+ACT.orsel=function(b){OS.sel=b.dataset.id;OS.msg='';paint();window.scrollTo(0,0)};
+ACT.orback=function(){OS.sel=null;paint();window.scrollTo(0,0)};
+ACT.orpick=function(){
+  var done=LS.get('ordone',{}), left=M.openResponse.filter(function(x){return !done[x.id]});
+  if(!left.length){OS.msg='Every task is marked done. Pick any row to practice it again.';return paint()}
+  OS.sel=left[Math.floor(Math.random()*left.length)].id;OS.msg='';paint();window.scrollTo(0,0);
 };
 CHG.orchk=function(t){var d=LS.get('orchk',{});if(t.checked)d[t.dataset.k]=1;else delete d[t.dataset.k];LS.set('orchk',d)};
 ACT.ormodel=function(b){
@@ -633,6 +719,96 @@ ACT.orreset=function(b){
   $$('[data-ortime="'+id+'"]').forEach(function(e){e.textContent=fmtS(o.left)});
   var tb=$('[data-act="ortimer"][data-id="'+id+'"]'); if(tb) tb.textContent=orBtn(id);
 };
+
+/* ---------- Cheat sheet (recipes) ---------- */
+var RS={flt:'all',q:'',compact:false};
+function recCard(r){
+  var st=r.steps||[], vs=r.variations||[];
+  return '<article class="card rcp"><h4>'+r.skill+'</h4>'+(r.spot?'<p><strong>Spot it:</strong> '+r.spot+'</p>':'')+
+    (r.formula?'<div class="formulas"><div class="fx">'+r.formula+'</div></div>':'')+
+    (st.length?'<ol class="rsteps">'+st.map(function(x){return '<li>'+x+'</li>'}).join('')+'</ol>':'')+
+    '<div class="rx-more">'+(r.example?'<p><strong>Example:</strong> '+r.example+'</p>':'')+
+    (vs.length?'<div class="vars"><strong>Variations</strong>'+vs.map(function(v){return '<p class="var"><span class="mono">If</span> '+v['if']+' <span class="mono">&rarr; Do</span> '+v['do']+'</p>'}).join('')+'</div>':'')+
+    (r.trap?'<p class="trap"><strong>Trap:</strong> '+r.trap+'</p>':'')+'</div></article>';
+}
+function recList(){
+  var q=RS.q.trim().toLowerCase(), p=RS.flt.split(':');
+  var rs=M.recipes.filter(function(r){
+    if(RS.flt!=='all'&&!(p[0]==='sub'?objSub(r.obj)===p[1]:r.obj===p[1])) return false;
+    return !q||[r.skill,r.spot].concat(r.steps||[]).join(' ').toLowerCase().indexOf(q)>=0;
+  });
+  if(!rs.length) return '<p class="muted">No recipes match.</p>';
+  var order=M.objectives.map(function(o){return o.id}); rs.forEach(function(r){if(order.indexOf(r.obj)<0)order.push(r.obj)});
+  return order.map(function(id){
+    var g=rs.filter(function(r){return r.obj===id}); if(!g.length) return '';
+    return '<h3 class="sub"><span class="mono">'+id+'</span> '+((byId[id]||{}).title||'')+'</h3>'+g.map(recCard).join('');
+  }).join('');
+}
+R.recipes=function(){
+  if(!M.recipes.length) return '<h2>Cheat sheet</h2>'+empty('The cheat sheet is not loaded yet.');
+  var ids={}; M.recipes.forEach(function(r){ids[r.obj]=1});
+  var o='<option value="all">All recipes</option>'+Object.keys(SUBS).filter(function(k){return M.recipes.some(function(r){return objSub(r.obj)===k})}).map(function(k){return '<option value="sub:'+k+'"'+(RS.flt==='sub:'+k?' selected':'')+'>Subarea '+k+'</option>'}).join('')+
+    Object.keys(ids).sort().map(function(id){return '<option value="obj:'+id+'"'+(RS.flt==='obj:'+id?' selected':'')+'>'+id+' '+String((byId[id]||{}).title||'').replace(/<[^>]+>|\\\(|\\\)/g,'')+'</option>'}).join('');
+  return '<h2>Cheat sheet</h2><div class="rtools"><div><label class="lbl" for="rc-flt">Show</label><select id="rc-flt" data-chg="rcflt">'+o.replace('<option value="all">','<option value="all"'+(RS.flt==='all'?' selected':'')+'>')+'</select></div>'+
+    '<div><label class="lbl" for="rc-q">Search</label><input type="search" id="rc-q" data-inp="rcq" placeholder="skill, clue or step" value="'+esc(RS.q)+'"></div>'+
+    '<label class="donechk" for="rc-compact"><input type="checkbox" id="rc-compact" data-chg="rccompact"'+(RS.compact?' checked':'')+'> Compact view</label></div>'+
+    '<div id="rc-list" class="rlist'+(RS.compact?' compact':'')+'">'+recList()+'</div>';
+};
+CHG.rcflt=function(t){RS.flt=t.value;paint()};
+CHG.rccompact=function(t){RS.compact=t.checked;var l=$('#rc-list');if(l)l.classList.toggle('compact',RS.compact)};
+ACT.rcopen=function(b){RS.flt='obj:'+b.dataset.id;RS.q='';show('recipes')};
+
+/* ---------- Progress backup ---------- */
+var BK={pending:null}, PFX='mtel63:';
+function bkBox(){
+  return '<section class="card" id="backup"><h3 style="margin-top:0">Your progress</h3><p>Progress is saved in this browser on this device. To move it, copy your backup code and paste it on the other device.</p>'+
+    '<div class="row"><button class="btn" id="bk-copy" data-act="bkcopy">Copy backup code</button><span id="bk-msg" role="status" class="muted"></span></div>'+
+    '<label class="lbl" for="bk-code">Backup code (paste a code here to restore)</label><textarea id="bk-code" rows="3" style="min-height:70px" spellcheck="false"></textarea>'+
+    '<div class="row"><button class="btn" id="bk-restore" data-act="bkrestore">Restore</button><button class="btn ghost" id="bk-reset" data-act="bkreset">Reset all progress</button></div><div id="bk-confirm"></div></section>';
+}
+function bkMsg(t){var e=$('#bk-msg');if(e)e.textContent=t}
+function allKeys(){
+  var o={}; Object.keys(mem).forEach(function(k){o[PFX+k]=JSON.stringify(mem[k])});
+  try{for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);if(k&&k.indexOf(PFX)===0&&!(k in o))o[k]=localStorage.getItem(k)}}catch(e){}
+  return o;
+}
+function parseCode(t){
+  try{
+    var o=JSON.parse(decodeURIComponent(escape(atob(String(t).replace(/\s+/g,'')))));
+    if(!o||typeof o!=='object'||Array.isArray(o)) return null;
+    var ks=Object.keys(o);
+    for(var i=0;i<ks.length;i++){if(ks[i].indexOf(PFX)!==0||typeof o[ks[i]]!=='string') return null;JSON.parse(o[ks[i]])}
+    return ks.length?o:null;
+  }catch(e){return null}
+}
+function wipe(){
+  Object.keys(mem).forEach(function(k){delete mem[k]});
+  try{var del=[];for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);if(k&&k.indexOf(PFX)===0)del.push(k)}del.forEach(function(k){localStorage.removeItem(k)})}catch(e){}
+}
+function bkConfirm(text,act){
+  $('#bk-confirm').innerHTML='<div class="card confirm" role="group" aria-label="Confirm"><p><strong>'+text+'</strong></p><div class="row"><button class="btn primary" id="bk-yes" data-act="'+act+'">Yes</button><button class="btn" id="bk-no" data-act="bkno">Cancel</button></div></div>';
+  $('#bk-no').focus();
+}
+ACT.bkcopy=function(){
+  var code=makeCode(), ta=$('#bk-code');
+  var fb=function(){ta.value=code;ta.focus();ta.select();try{document.execCommand('copy')}catch(e){}bkMsg('Select the code in the box and copy it.')};
+  if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(code).then(function(){bkMsg('Copied.')},fb); else fb();
+};
+function makeCode(){return btoa(unescape(encodeURIComponent(JSON.stringify(allKeys()))))}
+ACT.bkrestore=function(){
+  var o=parseCode($('#bk-code').value);
+  if(!o){bkMsg('That code is not valid. Copy the whole code and try again.');return}
+  BK.pending=o; bkMsg(''); bkConfirm('Restore '+Object.keys(o).length+' saved items? This replaces the progress on this device.','bkyes');
+};
+ACT.bkyes=function(){
+  var o=BK.pending; BK.pending=null; if(!o) return;
+  wipe();
+  Object.keys(o).forEach(function(k){mem[k.slice(PFX.length)]=JSON.parse(o[k]);try{localStorage.setItem(k,o[k])}catch(e){}});
+  paint(); bkMsg('Restored.');
+};
+ACT.bkreset=function(){bkMsg('');bkConfirm('Delete all saved progress on this device? This cannot be undone.','bkdel')};
+ACT.bkdel=function(){wipe();paint();bkMsg('All progress was reset.')};
+ACT.bkno=function(){BK.pending=null;$('#bk-confirm').innerHTML='';var b=$('#bk-copy');if(b)b.focus()};
 
 /* ---------- Links ---------- */
 R.links=function(){
@@ -662,7 +838,11 @@ ACT.tab=function(b){show(b.dataset.tab)};
 
 document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-act]');if(b&&ACT[b.dataset.act])ACT[b.dataset.act](b,e)});
 document.addEventListener('change',function(e){var t=e.target;if(t.dataset&&t.dataset.chg&&CHG[t.dataset.chg])CHG[t.dataset.chg](t)});
-document.addEventListener('input',function(e){var t=e.target;if(t.dataset&&t.dataset.inp==='draft')LS.set('draft:'+t.dataset.id,t.value)});
+document.addEventListener('input',function(e){
+  var t=e.target; if(!t.dataset) return;
+  if(t.dataset.inp==='draft') LS.set('draft:'+t.dataset.id,t.value);
+  else if(t.dataset.inp==='rcq'){RS.q=t.value;var l=$('#rc-list');if(l){l.innerHTML=recList();typeset(l)}}
+});
 document.addEventListener('keydown',function(e){
   if(cur==='cards'&&(e.key===' '||e.code==='Space')&&!(e.target.closest&&e.target.closest('input,select,textarea,button,a,summary'))){e.preventDefault();ACT.flip()}
 });
