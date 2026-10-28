@@ -1,0 +1,691 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MTEL Math 63 Study Kit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:wght@600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* Layout: header (title, fact strip, tab bar) above one centered column; list + detail side by side from 820px. */
+:root{
+  --bg:#fbfcff; --paper:#ffffff; --ink:#13213f; --muted:#56637f; --line:#cfd8ec;
+  --grid:rgba(52,96,200,.07); --grid-major:rgba(52,96,200,.12);
+  --accent:#1f4fd8; --accent-ink:#ffffff; --accent-soft:#e6edff;
+  --mark:#fff08a; --good:#146c36; --good-soft:#dcf5e5; --bad:#b4232a; --bad-soft:#fde5e6;
+  --focus:#1f4fd8;
+  --f-head:"Bricolage Grotesque",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-body:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0e1527; --paper:#151e36; --ink:#e7ecf8; --muted:#9aa8c8; --line:#2b3860;
+    --grid:rgba(130,170,255,.06); --grid-major:rgba(130,170,255,.11);
+    --accent:#7ea4ff; --accent-ink:#0b1226; --accent-soft:#1e2c52;
+    --mark:rgba(255,226,70,.30); --good:#5bd68b; --good-soft:#12301f; --bad:#ff8b8f; --bad-soft:#3a1618;
+    --focus:#9db9ff; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0e1527; --paper:#151e36; --ink:#e7ecf8; --muted:#9aa8c8; --line:#2b3860;
+  --grid:rgba(130,170,255,.06); --grid-major:rgba(130,170,255,.11);
+  --accent:#7ea4ff; --accent-ink:#0b1226; --accent-soft:#1e2c52;
+  --mark:rgba(255,226,70,.30); --good:#5bd68b; --good-soft:#12301f; --bad:#ff8b8f; --bad-soft:#3a1618;
+  --focus:#9db9ff; color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--bg); color:var(--ink); font:17px/1.55 var(--f-body);
+  background-image:
+    linear-gradient(var(--grid-major) 1px,transparent 1px),
+    linear-gradient(90deg,var(--grid-major) 1px,transparent 1px),
+    linear-gradient(var(--grid) 1px,transparent 1px),
+    linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:96px 96px,96px 96px,24px 24px,24px 24px;
+  overflow-wrap:anywhere;
+}
+.wrap{max-width:980px;margin:0 auto;padding:0 16px}
+h1,h2{font-family:var(--f-head);letter-spacing:-.01em;line-height:1.15;margin:0 0 .6rem}
+h1{font-size:1.9rem}
+h2{font-size:1.5rem;margin-top:1.4rem}
+h3{font-size:1.05rem;margin:1.2rem 0 .4rem}
+p{margin:.5rem 0}
+ul,ol{padding-left:1.3rem;margin:.4rem 0}
+li{margin:.25rem 0}
+a{color:var(--accent)}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+button,select,textarea,input{font:inherit;color:inherit}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+
+/* header */
+.top{border-bottom:2px solid var(--ink);background:var(--bg);padding-top:14px}
+.kicker{font-size:.8rem;color:var(--muted);margin:0 0 2px;text-transform:uppercase;letter-spacing:.08em}
+.facts{font-size:.85rem;margin:2px 0 10px;color:var(--muted)}
+.tabs{display:flex;gap:4px;overflow-x:auto;scrollbar-width:thin;padding-bottom:0;margin-bottom:-2px}
+.tab{flex:0 0 auto;min-height:44px;padding:8px 14px;border:2px solid transparent;border-bottom:0;border-radius:8px 8px 0 0;background:transparent;cursor:pointer;font-weight:700}
+.tab:hover{background:var(--accent-soft)}
+.tab[aria-current="page"]{background:var(--bg);border-color:var(--ink);color:var(--accent);position:relative;top:0;padding-bottom:10px}
+main{padding-top:6px;padding-bottom:60px;outline:none}
+
+/* shared parts */
+.btn{min-height:44px;padding:8px 16px;border:2px solid var(--ink);border-radius:8px;background:var(--paper);cursor:pointer;font-weight:700}
+.btn:hover:not(:disabled){background:var(--accent-soft)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn.primary:hover:not(:disabled){filter:brightness(1.08);background:var(--accent)}
+.btn.ghost{border-color:var(--line)}
+.btn[aria-pressed="true"]{background:var(--mark)}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:.7rem 0}
+.row.between{justify-content:space-between}
+.card{background:var(--paper);border:1.5px solid var(--line);border-radius:10px;padding:14px 16px;margin:12px 0}
+.badge{display:inline-block;font-size:.78rem;padding:1px 8px;border:1.5px solid var(--accent);border-radius:99px;color:var(--accent);vertical-align:middle;font-weight:600}
+.chip{display:inline-block;min-height:32px;padding:3px 10px;border:1.5px solid var(--line);border-radius:99px;background:var(--paper);cursor:pointer;font-size:.85rem}
+.chip:hover{background:var(--accent-soft)}
+.kick{font-size:.78rem;color:var(--muted);margin:0;text-transform:uppercase;letter-spacing:.06em}
+.empty{border:2px dashed var(--line);border-radius:10px;padding:20px;margin:16px 0;background:var(--paper)}
+.note{font-size:.9rem;color:var(--muted);border-left:3px solid var(--accent);padding-left:10px;margin:12px 0}
+.mark,.formulas{background:var(--mark)}
+.bar{height:10px;border:1.5px solid var(--ink);border-radius:6px;background:var(--paper);overflow:hidden;min-width:60px}
+.bar>i{display:block;height:100%;background:var(--accent);width:0}
+.prose p:first-child{margin-top:0}
+mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;max-width:100%;padding:2px 0}
+mjx-container{max-width:100%}
+mjx-container.wide{display:block;overflow-x:auto;overflow-y:hidden;padding:2px 0}
+
+/* plan */
+.overall{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;margin:10px 0}
+.week{background:var(--paper);border:1.5px solid var(--line);border-radius:10px;margin:10px 0}
+.week>summary{cursor:pointer;padding:12px 14px;display:grid;grid-template-columns:1fr auto;gap:4px 12px;align-items:center;list-style:none}
+.week>summary::-webkit-details-marker{display:none}
+.week>summary .wt{font-weight:700}
+.week>summary .hrs{font-size:.8rem;color:var(--muted)}
+.week>summary .bar{grid-column:1/-1}
+.week[open]>summary{border-bottom:1.5px solid var(--line)}
+.wbody{padding:6px 14px 12px}
+.days{list-style:none;padding:0}
+.day{display:grid;grid-template-columns:auto 3rem 1fr;gap:10px;align-items:start;padding:8px 0;border-bottom:1px dashed var(--line);cursor:pointer}
+.day input{width:22px;height:22px;margin:2px 0 0;accent-color:var(--accent)}
+.day .dn{font-family:var(--f-mono);font-weight:600}
+.day input:checked~.dt{color:var(--muted);text-decoration:line-through}
+.wobjs{margin:8px 0;display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:.9rem}
+
+/* concepts */
+.split{display:block}
+.objlist{list-style:none;padding:0}
+.obj{width:100%;display:grid;grid-template-columns:3.4rem 1fr;gap:8px;text-align:left;min-height:44px;padding:6px 10px;border:1.5px solid var(--line);border-radius:8px;background:var(--paper);cursor:pointer}
+.obj:hover{background:var(--accent-soft)}
+.obj[aria-current="true"]{border-color:var(--accent);background:var(--accent-soft);box-shadow:inset 4px 0 0 var(--accent)}
+.sub{font-size:.95rem;margin:1rem 0 .4rem}
+.dh{font-size:1.4rem;margin-top:2px}
+.fx{overflow-x:auto;padding:4px 0}
+.formulas{padding:8px 12px;border-radius:6px;border:1.5px solid var(--line)}
+.steps{counter-reset:s;padding-left:1.4rem}
+.steps li{padding-left:4px}
+.traps li::marker{color:var(--bad)}
+.vids{list-style:none;padding:0;display:grid;gap:8px}
+.vid{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:center;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;background:var(--paper);color:inherit;text-decoration:none;min-height:56px}
+.vid:hover{background:var(--accent-soft);border-color:var(--accent)}
+.vid .vt{font-weight:700;color:var(--accent)}
+.vid .vm{font-size:.85rem;color:var(--muted)}
+.vis{border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;margin:10px 0;background:var(--paper)}
+.vis h4{margin:0 0 2px;font-size:1rem}
+.vis .vcap{margin:0 0 8px;color:var(--muted);font-size:.95rem}
+.vbox{max-width:640px}
+.vbox canvas{display:block;width:100%;border:1.5px solid var(--line);border-radius:8px;background:var(--bg)}
+.vctl{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:6px 16px;margin:8px 0}
+.vctl label{display:block;font-size:.9rem}
+.vctl input[type=range]{width:100%;accent-color:var(--accent);min-height:28px}
+.vctl select{padding:4px 8px}
+.vctl .vv{font-family:var(--f-mono);font-variant-numeric:tabular-nums;font-weight:600}
+.vro{font-family:var(--f-mono);font-size:.85rem;margin:6px 0 0;padding:6px 8px;background:var(--accent-soft);border-radius:6px;overflow-x:auto;white-space:pre-wrap}
+.exlab{font-size:.85rem;margin:14px 0 0}
+.linkli{margin:.4rem 0}
+@media (min-width:820px){
+  .split{display:grid;grid-template-columns:300px 1fr;gap:20px;align-items:start}
+  .listcol{position:sticky;top:8px;max-height:calc(100vh - 16px);overflow-y:auto;padding-right:4px}
+  .detail{margin-top:0}
+}
+
+/* flashcards */
+.boxes{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.boxes span{font-family:var(--f-mono);font-size:.85rem;border:1.5px solid var(--line);border-radius:6px;padding:2px 8px;background:var(--paper)}
+.fcard{display:block;width:100%;min-height:220px;padding:20px 18px;border:2px solid var(--ink);border-radius:12px;background:var(--paper);text-align:center;cursor:pointer;box-shadow:5px 5px 0 var(--line);margin:12px 0}
+.fcard.back{background:var(--accent-soft)}
+.fcard .side{display:block;font-size:.78rem;color:var(--muted);margin-bottom:10px;text-transform:uppercase;letter-spacing:.06em}
+.fcard .ftxt{display:block;font-size:1.2rem;overflow-x:auto}
+.fcard .hint{display:block;font-size:.8rem;color:var(--muted);margin-top:14px}
+select,textarea{width:100%;max-width:100%;padding:8px 10px;border:1.5px solid var(--ink);border-radius:8px;background:var(--paper)}
+label.lbl{display:block;font-weight:700;margin-bottom:4px}
+
+/* practice */
+.weak{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;background:var(--paper)}
+.modes{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.exambar{position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;background:var(--bg);border-bottom:1.5px solid var(--line);padding:8px 0;margin-top:8px}
+.timer{font-size:1.4rem;font-weight:600}
+.timer.low{color:var(--bad)}
+.navgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(44px,1fr));gap:4px;margin:10px 0}
+.qn{min-height:44px;border:1.5px solid var(--line);border-radius:6px;background:var(--paper);cursor:pointer;font-family:var(--f-mono)}
+.qn.ans{background:var(--accent-soft);border-color:var(--accent)}
+.qn.flag{border-style:dashed;border-color:var(--bad);box-shadow:inset 0 -4px 0 var(--bad)}
+.qn.cur{outline:3px solid var(--ink);outline-offset:1px}
+.qtext{font-size:1.1rem;overflow-x:auto}
+.choices{display:grid;gap:8px;margin-top:12px}
+.choice{display:grid;grid-template-columns:2rem 1fr auto;gap:8px;align-items:start;text-align:left;width:100%;min-height:48px;padding:8px 12px;border:1.5px solid var(--ink);border-radius:8px;background:var(--paper);cursor:pointer}
+.choice:hover:not([aria-disabled="true"]){background:var(--accent-soft)}
+.choice .lt{font-family:var(--f-mono);font-weight:600}
+.choice .ct{overflow-x:auto}
+.choice[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);box-shadow:inset 4px 0 0 var(--accent)}
+.choice[aria-disabled="true"]{cursor:default}
+.choice.right{background:var(--mark);border-color:var(--good);border-width:2.5px}
+.choice.wrong{background:var(--bad-soft);border-color:var(--bad);border-width:2.5px}
+.choice .tag{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;align-self:center}
+.choice.wrong .tag{color:var(--bad)}
+.choice.right .tag{color:var(--good)}
+.verdict{font-weight:700;margin:10px 0 4px}
+.verdict.ok{color:var(--good)}
+.verdict.no{color:var(--bad)}
+.why{border-left:3px solid var(--accent);padding-left:10px;margin:6px 0}
+.confirm{border-color:var(--ink);border-width:2px;background:var(--mark)}
+.score{font-family:var(--f-mono);font-size:2.4rem;font-weight:600;margin:6px 0}
+.sbar{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;margin:8px 0}
+.sbar .bar{grid-column:1/-1}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:420px}
+th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.85rem;color:var(--muted)}
+.rv{list-style:none;padding:0}
+.rv>li{border:1.5px solid var(--line);border-left-width:5px;border-radius:8px;padding:10px 12px;margin:10px 0;background:var(--paper)}
+.rv>li.ok{border-left-color:var(--good)}
+.rv>li.no{border-left-color:var(--bad)}
+.legend{font-size:.8rem;color:var(--muted)}
+
+/* open response */
+.rubric td:first-child,.rubric th:first-child{width:3rem;font-family:var(--f-mono);font-weight:600}
+.ortimer{font-size:1.5rem;font-weight:600}
+textarea{min-height:220px;resize:vertical;line-height:1.5}
+.checks{list-style:none;padding:0}
+.checks label{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start;padding:4px 0;cursor:pointer}
+.checks input{width:20px;height:20px;margin:2px 0 0;accent-color:var(--accent)}
+.model{border-top:2px dashed var(--line);margin-top:12px;padding-top:6px}
+
+/* links */
+.linkgrp ul{list-style:none;padding:0}
+.linkgrp li{padding:8px 0;border-bottom:1px dashed var(--line)}
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <p class="kicker mono">Massachusetts Tests for Educator Licensure · Field 63</p>
+    <h1>MTEL Mathematics study kit</h1>
+    <p class="facts mono">85 multiple choice · 2 open response · 4 hours · pass 240</p>
+    <nav id="tabs" class="tabs" aria-label="Sections"></nav>
+  </div>
+</header>
+<main class="wrap" id="view" tabindex="-1"></main>
+
+<script>
+window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]},svg:{fontCache:'global'},startup:{typeset:false}};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.js"></script>
+<script src="data/plan.js"></script>
+<script src="data/links.js"></script>
+<script src="data/obj-I-II.js"></script>
+<script src="data/obj-III-IV.js"></script>
+<script src="data/open-response.js"></script>
+<script src="data/videos.js"></script>
+<script src="visuals.js"></script>
+<script>
+(function(){
+'use strict';
+var M=window.MTEL||{};
+['objectives','questions','cards','plan','links','openResponse','videos','visuals'].forEach(function(k){M[k]=M[k]||[]});
+
+var SUBS={
+  I:{n:'Number Sense and Operations',w:10},
+  II:{n:'Relations, Functions, and Algebra',w:30},
+  III:{n:'Geometry and Measurement',w:20},
+  IV:{n:'Probability, Statistics, Calculus, and Discrete Mathematics',w:20},
+  V:{n:'Integration of Knowledge',w:20}
+};
+var TABS=[['plan','Plan'],['concepts','Concepts'],['cards','Flashcards'],['practice','Practice'],['open','Open response'],['links','Links']];
+var RUB=[
+  ['4','Thorough knowledge of the subject; purpose fully achieved; accurate, substantial application; high-quality support; comprehensive reasoning.'],
+  ['3','Adequate knowledge; purpose largely achieved; generally accurate application; acceptable support; adequate reasoning.'],
+  ['2','Limited knowledge; purpose partially achieved; limited or partly wrong application; weak support; poor reasoning.'],
+  ['1','Weak knowledge; purpose not achieved; little accurate application; little or no reasoning.']
+];
+
+var $=function(s,r){return (r||document).querySelector(s)};
+var $$=function(s,r){return [].slice.call((r||document).querySelectorAll(s))};
+var esc=function(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})};
+var pct=function(c,a){return a?Math.round(100*c/a):0};
+
+/* storage: in-memory first, localStorage when it works */
+var mem={};
+var LS={
+  get:function(k,d){
+    if(k in mem) return mem[k];
+    try{var v=localStorage.getItem('mtel63:'+k); if(v!=null){mem[k]=JSON.parse(v); return mem[k]}}catch(e){}
+    return d;
+  },
+  set:function(k,v){mem[k]=v; try{localStorage.setItem('mtel63:'+k,JSON.stringify(v))}catch(e){}}
+};
+
+var byId={}; M.objectives.forEach(function(o){byId[o.id]=o});
+var objSub=function(id){var o=byId[id];return o&&o.subarea};
+var qSub=function(q){return objSub(q.obj)};
+function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+function empty(msg){return '<div class="empty"><p><strong>'+msg+'</strong></p><p class="muted">This content is still being added. Open another tab, or check back soon.</p></div>'}
+/* inline math cannot wrap; give any formula wider than its box its own scroll */
+function fitMath(el){$$('mjx-container',el).forEach(function(m){var p=m.parentElement,cs=p&&getComputedStyle(p),w=p?p.clientWidth-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight):0;if(w>0&&m.getBoundingClientRect().width>w)m.classList.add('wide')})}
+function typeset(el){
+  var X=window.MathJax; if(!X||!el) return;
+  var go=function(){return window.MathJax.typesetPromise&&window.MathJax.typesetPromise([el]).then(function(){fitMath(el)})};
+  try{(X.startup&&X.startup.promise?X.startup.promise.then(go):Promise.resolve().then(go)).catch(function(){})}catch(e){}
+}
+function fmtT(ms){var s=Math.max(0,Math.ceil(ms/1000));var h=Math.floor(s/3600),m=Math.floor(s%3600/60);s%=60;return h+':'+(m<10?'0':'')+m+':'+(s<10?'0':'')+s}
+function fmtS(s){var m=Math.floor(s/60);s%=60;return (m<10?'0':'')+m+':'+(s<10?'0':'')+s}
+
+var R={}, ACT={}, CHG={};
+var cur='plan';
+
+/* ---------- Plan ---------- */
+var pk=function(w,i){return 'w'+w.week+'d'+i};
+function wkStat(w,done){var d=w.days||[],n=0;d.forEach(function(_,i){if(done[pk(w,i)])n++});return {n:n,t:d.length}}
+function barHtml(n,t,attr,label){return '<div class="bar" role="progressbar" aria-label="'+label+'" aria-valuemin="0" aria-valuemax="'+t+'" aria-valuenow="'+n+'" '+attr+'><i style="width:'+(t?100*n/t:0)+'%"></i></div>'}
+function setBar(el,n,t){if(!el)return;el.setAttribute('aria-valuenow',n);el.setAttribute('aria-valuemax',t);el.firstElementChild.style.width=(t?100*n/t:0)+'%'}
+R.plan=function(){
+  if(!M.plan.length) return '<h2>Plan</h2>'+empty('The study plan is not loaded yet.');
+  var done=LS.get('plan',{}), N=0, T=0;
+  M.plan.forEach(function(w){var s=wkStat(w,done);N+=s.n;T+=s.t});
+  var open=-1; M.plan.some(function(w,i){var s=wkStat(w,done);if(s.n<s.t){open=i;return true}});
+  var h='<h2>Study plan</h2><div class="overall"><strong>Overall</strong>'+barHtml(N,T,'id="bar-all"','Overall plan progress')+'<span class="mono" id="cnt-all">'+N+'/'+T+'</span></div>';
+  M.plan.forEach(function(w,wi){
+    var s=wkStat(w,done);
+    h+='<details class="week"'+(wi===open?' open':'')+'><summary><span class="wt">Week '+w.week+' · '+w.title+'</span><span class="mono"><span data-wcnt="'+wi+'">'+s.n+'/'+s.t+'</span>'+(w.hours?' · <span class="hrs">'+w.hours+'</span>':'')+'</span>'+barHtml(s.n,s.t,'data-wbar="'+wi+'"','Week '+w.week+' progress')+'</summary><div class="wbody">';
+    if((w.objs||[]).length) h+='<div class="wobjs"><span>Objectives:</span>'+w.objs.map(function(id){return '<button class="chip mono" data-act="goobj" data-id="'+id+'">'+id+'</button>'}).join('')+'</div>';
+    h+='<ul class="days">'+(w.days||[]).map(function(d,i){
+      var k=pk(w,i);
+      return '<li><label class="day" for="chk-'+k+'"><input type="checkbox" id="chk-'+k+'" data-chg="day" data-k="'+k+'"'+(done[k]?' checked':'')+'><span class="dn">'+d.day+'</span><span class="dt">'+d.task+'</span></label></li>';
+    }).join('')+'</ul></div></details>';
+  });
+  return h;
+};
+function updPlan(){
+  var done=LS.get('plan',{}), N=0, T=0;
+  M.plan.forEach(function(w,wi){var s=wkStat(w,done);N+=s.n;T+=s.t;setBar($('[data-wbar="'+wi+'"]'),s.n,s.t);var c=$('[data-wcnt="'+wi+'"]');if(c)c.textContent=s.n+'/'+s.t});
+  setBar($('#bar-all'),N,T); var c=$('#cnt-all'); if(c)c.textContent=N+'/'+T;
+}
+CHG.day=function(t){var d=LS.get('plan',{});if(t.checked)d[t.dataset.k]=1;else delete d[t.dataset.k];LS.set('plan',d);updPlan()};
+
+/* ---------- Concepts ---------- */
+var CS={obj:null};
+function detail(o){
+  var links=[]; M.links.forEach(function(g){(g.items||[]).forEach(function(it){if((it.objs||[]).indexOf(o.id)>=0)links.push(it)})});
+  var vids=M.videos.filter(function(v){return v.obj===o.id});
+  var vis=M.visuals.filter(function(v){return (v.objs||[]).indexOf(o.id)>=0});
+  var L=function(a){return a&&a.length};
+  var h='<p class="kick mono">Objective '+o.id+' · Subarea '+o.subarea+'</p><h2 class="dh">'+o.title+'</h2>';
+  h+='<section><h3>In plain words</h3><div class="prose">'+(o.plain||'')+'</div></section>';
+  if(vids.length) h+='<section><h3>Watch</h3><ul class="vids">'+vids.map(function(v){
+    return '<li><a class="vid" href="'+v.u+'" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="32" height="32" aria-hidden="true"><circle cx="12" cy="12" r="11" style="fill:var(--accent)"/><path d="M10 8l6 4-6 4z" style="fill:var(--accent-ink)"/></svg><span><span class="vt">'+esc(v.t)+'</span><br><span class="vm">'+esc(v.ch)+(v.len?' · <span class="mono">'+v.len+'</span>':'')+' · opens in a new tab</span></span></a></li>';
+  }).join('')+'</ul></section>';
+  if(vis.length) h+='<section><h3>See it</h3>'+vis.map(function(v){
+    return '<div class="vis" data-vid="'+v.id+'"><h4>'+v.title+'</h4><p class="vcap">'+(v.caption||'')+'</p><div class="vbox"></div></div>';
+  }).join('')+'</section>';
+  if(L(o.keyIdeas)) h+='<section><h3>Key ideas</h3><ul>'+o.keyIdeas.map(function(x){return '<li>'+x+'</li>'}).join('')+'</ul></section>';
+  if(L(o.formulas)) h+='<section><h3>Formulas</h3><div class="formulas">'+o.formulas.map(function(x){return '<div class="fx">'+x+'</div>'}).join('')+'</div></section>';
+  var exs=(o.example?[o.example]:[]).concat(o.moreExamples||[]);
+  if(exs.length){
+    h+='<section><h3>Worked example'+(exs.length>1?'s':'')+'</h3>'+exs.map(function(ex,i){
+      var st=ex.steps||[];
+      return (exs.length>1?'<p class="exlab mono"><strong>Example '+(i+1)+'</strong></p>':'')+'<div class="prose">'+(ex.prompt||'')+'</div>'+
+        (st.length?'<ol class="steps" id="steps-'+i+'">'+st.map(function(s){return '<li hidden>'+s+'</li>'}).join('')+'</ol><div class="row"><button class="btn" id="b-next-'+i+'" data-act="nextstep" data-i="'+i+'">Show next step</button><button class="btn ghost" id="b-all-'+i+'" data-act="allsteps" data-i="'+i+'">Show all</button></div>':'');
+    }).join('')+'</section>';
+  }
+  if(L(o.traps)) h+='<section><h3>Common traps</h3><ul class="traps">'+o.traps.map(function(x){return '<li>'+x+'</li>'}).join('')+'</ul></section>';
+  if(links.length) h+='<section><h3>Links for this objective</h3><ul>'+links.map(function(it){return '<li class="linkli"><a href="'+it.u+'" target="_blank" rel="noopener">'+it.t+'</a>'+(it.note?' <span class="muted">— '+it.note+'</span>':'')+'</li>'}).join('')+'</ul></section>';
+  var nq=M.questions.filter(function(q){return q.obj===o.id}).length;
+  h+='<div class="row"><button class="btn primary" data-act="drill" data-id="'+o.id+'"'+(nq?'':' disabled')+'>Practice this objective</button><span class="muted mono">'+nq+' question'+(nq===1?'':'s')+'</span></div>';
+  return h;
+}
+function mountVis(root){
+  $$('.vis',root).forEach(function(slot){
+    var v=M.visuals.filter(function(x){return x.id===slot.dataset.vid})[0], box=$('.vbox',slot);
+    if(!v||!box||typeof v.mount!=='function') return;
+    try{v.mount(box)}catch(e){box.innerHTML='<p class="muted">This visual could not load.</p>'}
+  });
+}
+R.concepts=function(){
+  if(!M.objectives.length) return '<h2>Concepts</h2>'+empty('The concept notes are not loaded yet.');
+  if(!byId[CS.obj]){var l=LS.get('lastObj');CS.obj=byId[l]?l:M.objectives[0].id}
+  var list='';
+  Object.keys(SUBS).forEach(function(k){
+    var os=M.objectives.filter(function(o){return o.subarea===k}); if(!os.length) return;
+    list+='<h3 class="sub">'+k+'. '+SUBS[k].n+' <span class="badge mono">'+SUBS[k].w+'%</span></h3><ul class="objlist">'+os.map(function(o){
+      return '<li><button class="obj" data-act="sel" data-id="'+o.id+'" aria-current="'+(o.id===CS.obj)+'"><span class="mono">'+o.id+'</span><span>'+o.title+'</span></button></li>';
+    }).join('')+'</ul>';
+  });
+  return '<h2>Concepts</h2><div class="split"><div class="listcol">'+list+'</div><article class="card detail" id="obj-detail" tabindex="-1">'+detail(byId[CS.obj])+'</article></div>';
+};
+ACT.sel=function(b){
+  CS.obj=b.dataset.id; LS.set('lastObj',CS.obj);
+  $$('.obj').forEach(function(x){x.setAttribute('aria-current',String(x.dataset.id===CS.obj))});
+  var d=$('#obj-detail'); d.innerHTML=detail(byId[CS.obj]); mountVis(d); typeset(d);
+  if(window.innerWidth<820) d.scrollIntoView({block:'start'});
+};
+function stepsDone(i){$('#b-next-'+i).disabled=true;$('#b-all-'+i).disabled=true}
+ACT.nextstep=function(b){
+  var i=b.dataset.i, li=$('#steps-'+i+' li[hidden]'); if(li){li.hidden=false;typeset(li)}
+  if(!$('#steps-'+i+' li[hidden]')) stepsDone(i);
+};
+ACT.allsteps=function(b){var i=b.dataset.i;$$('#steps-'+i+' li[hidden]').forEach(function(l){l.hidden=false});typeset($('#steps-'+i));stepsDone(i)};
+ACT.goobj=function(b){CS.obj=b.dataset.id;LS.set('lastObj',CS.obj);show('concepts')};
+ACT.drill=function(b){P.mode='drill';P.drillSel='obj:'+b.dataset.id;P.sess=null;show('practice');startSess()};
+
+/* ---------- Flashcards ---------- */
+var F={flt:'all',key:null,prev:null,flipped:false};
+function allCards(){var cnt={};return M.cards.map(function(c){var n=cnt[c.obj]=(cnt[c.obj]||0);cnt[c.obj]++;var x={key:c.obj+'#'+n};for(var p in c)x[p]=c[p];return x})}
+function fpool(){
+  var f=F.flt, a=allCards();
+  if(f==='all') return a;
+  var p=f.split(':');
+  return a.filter(function(c){return p[0]==='sub'?objSub(c.obj)===p[1]:c.obj===p[1]});
+}
+var boxOf=function(k){return LS.get('box',{})[k]||1};
+function nextCard(){
+  var pool=fpool(); if(!pool.length) return null;
+  if(pool.length>1) pool=pool.filter(function(c){return c.key!==F.prev});
+  var min=6; pool.forEach(function(c){min=Math.min(min,boxOf(c.key))});
+  var low=pool.filter(function(c){return boxOf(c.key)===min});
+  return low[Math.floor(Math.random()*low.length)].key;
+}
+R.cards=function(){
+  if(!M.cards.length) return '<h2>Flashcards</h2>'+empty('The flashcards are not loaded yet.');
+  var all=allCards(), pool=fpool();
+  if(!pool.some(function(c){return c.key===F.key})){F.key=nextCard();F.flipped=false}
+  var cnt={}; all.forEach(function(c){cnt[c.obj]=(cnt[c.obj]||0)+1});
+  var opts='<option value="all"'+(F.flt==='all'?' selected':'')+'>All cards ('+all.length+')</option>';
+  Object.keys(SUBS).forEach(function(k){
+    var n=all.filter(function(c){return objSub(c.obj)===k}).length; if(!n) return;
+    opts+='<option value="sub:'+k+'"'+(F.flt==='sub:'+k?' selected':'')+'>Subarea '+k+' ('+n+')</option>';
+  });
+  Object.keys(cnt).sort().forEach(function(id){
+    opts+='<option value="obj:'+id+'"'+(F.flt==='obj:'+id?' selected':'')+'>'+id+' '+esc((byId[id]||{}).title?String(byId[id].title).replace(/<[^>]+>|\\\(|\\\)/g,''):'')+' ('+cnt[id]+')</option>';
+  });
+  var h='<h2>Flashcards</h2><label class="lbl" for="fc-filter">Show cards from</label><select id="fc-filter" data-chg="fcflt">'+opts+'</select>';
+  var bc=[0,0,0,0,0,0]; pool.forEach(function(c){bc[boxOf(c.key)]++});
+  h+='<div class="boxes" aria-label="Cards in each Leitner box">'+[1,2,3,4,5].map(function(b){return '<span>Box '+b+': '+bc[b]+'</span>'}).join('')+'</div>';
+  var c=pool.filter(function(x){return x.key===F.key})[0];
+  if(!c) return h+empty('No cards for this filter.');
+  h+='<button class="fcard'+(F.flipped?' back':'')+'" id="fc-card" data-act="flip"><span class="side mono">'+(F.flipped?'Back':'Front')+' · box '+boxOf(c.key)+'</span><span class="ftxt">'+(F.flipped?c.back:c.front)+'</span><span class="hint">Click or press Space to flip</span></button>';
+  h+='<div class="row"><button class="btn" id="fc-again" data-act="again"'+(F.flipped?'':' disabled')+'>Again</button><button class="btn primary" id="fc-knew" data-act="knew"'+(F.flipped?'':' disabled')+'>Knew it</button></div>';
+  h+='<p class="note">Again sends the card back to box 1. Knew it moves it up one box. Lower boxes come first.</p>';
+  return h;
+};
+CHG.fcflt=function(t){F.flt=t.value;F.key=null;F.prev=null;F.flipped=false;paint()};
+ACT.flip=function(){
+  if(cur!=='cards'||!F.key) return;
+  F.flipped=!F.flipped; paint(); var c=$('#fc-card'); if(c)c.focus();
+};
+function rate(up){
+  if(!F.key||!F.flipped) return;
+  var b=LS.get('box',{}); b[F.key]=up?Math.min(5,(b[F.key]||1)+1):1; LS.set('box',b);
+  F.prev=F.key; F.key=nextCard(); F.flipped=false; paint(); var c=$('#fc-card'); if(c)c.focus();
+}
+ACT.again=function(){rate(false)};
+ACT.knew=function(){rate(true)};
+
+/* ---------- Practice ---------- */
+var P={mode:'drill',drillSel:'',sess:null,msg:''};
+var mkItem=function(q){return {q:q,perm:shuffle(q.choices.map(function(_,i){return i})),pick:null,flag:false}};
+var right=function(it){return it.pick!=null&&it.perm[it.pick]===it.q.answer};
+var LET='ABCDEFGH';
+function weakStrip(){
+  var st=LS.get('stats',{}), arr=[];
+  Object.keys(st).forEach(function(id){if(st[id].a)arr.push({id:id,c:st[id].c,a:st[id].a,p:pct(st[id].c,st[id].a)})});
+  arr.sort(function(x,y){return x.p-y.p||y.a-x.a});
+  var h='<div class="weak"><strong>Your weak areas</strong>';
+  if(!arr.length) return h+'<span class="muted">Take a diagnostic or a mock test to find them.</span></div>';
+  return h+arr.slice(0,4).map(function(x){return '<button class="chip mono" data-act="weakdrill" data-id="'+x.id+'" title="Drill this objective">'+x.id+' · '+x.p+'% ('+x.c+'/'+x.a+')</button>'}).join('')+'</div>';
+}
+R.practice=function(){
+  var s=P.sess;
+  if(s){
+    if(s.kind==='drill') return s.done?drillDone(s):drillView(s);
+    return s.done?results(s):examView(s);
+  }
+  if(!M.questions.length) return '<h2>Practice</h2>'+empty('The practice questions are not loaded yet.');
+  var h='<h2>Practice</h2>'+weakStrip();
+  h+='<div class="modes" role="group" aria-label="Practice mode">'+[['drill','Drill'],['diag','Diagnostic (20)'],['mock','Full mock (85)']].map(function(m){return '<button class="btn" data-act="mode" data-m="'+m[0]+'" aria-pressed="'+(P.mode===m[0])+'">'+m[1]+'</button>'}).join('')+'</div>';
+  var cnt={}; M.questions.forEach(function(q){var k=qSub(q);if(k)cnt[k]=(cnt[k]||0)+1});
+  var bank=Object.keys(SUBS).filter(function(k){return cnt[k]}).map(function(k){return k+': '+cnt[k]}).join(' · ');
+  if(P.msg) h+='<p class="note">'+P.msg+'</p>';
+  if(P.mode==='drill'){
+    var qn={}; M.questions.forEach(function(q){qn[q.obj]=(qn[q.obj]||0)+1});
+    if(!P.drillSel){var fk=Object.keys(SUBS).filter(function(k){return cnt[k]})[0];P.drillSel=fk?'sub:'+fk:'obj:'+M.questions[0].obj}
+    var o='<optgroup label="Subareas">'+Object.keys(SUBS).filter(function(k){return cnt[k]}).map(function(k){return '<option value="sub:'+k+'"'+(P.drillSel==='sub:'+k?' selected':'')+'>Subarea '+k+' — '+SUBS[k].n+' ('+cnt[k]+')</option>'}).join('')+'</optgroup>';
+    o+='<optgroup label="Objectives">'+Object.keys(qn).sort().map(function(id){return '<option value="obj:'+id+'"'+(P.drillSel==='obj:'+id?' selected':'')+'>'+id+' '+String((byId[id]||{}).title||'').replace(/<[^>]+>|\\\(|\\\)/g,'')+' ('+qn[id]+')</option>'}).join('')+'</optgroup>';
+    h+='<div class="card"><label class="lbl" for="drill-sel">Drill one objective or one subarea</label><select id="drill-sel" data-chg="drillsel">'+o+'</select><p class="muted">You see the answer and the reason after every question.</p><button class="btn primary" id="b-start" data-act="start">Start drill</button></div>';
+  }else if(P.mode==='diag'){
+    h+='<div class="card"><p><strong>Diagnostic, 20 questions.</strong> Random mix: 3 from I, 7 from II, 5 from III, 5 from IV. No feedback until you submit. No timer.</p><button class="btn primary" id="b-start" data-act="start">Start diagnostic</button></div>';
+  }else{
+    h+='<div class="card"><p><strong>Full mock, 85 questions.</strong> Mix: 11 from I, 32 from II, 21 from III, 21 from IV. Timer: <span class="mono">3:00:00</span>, the multiple-choice share of the 4-hour test. No feedback until you submit.</p><button class="btn primary" id="b-start" data-act="start">Start full mock</button></div>';
+  }
+  h+='<p class="muted mono">Question bank — '+(bank||'none yet')+'</p>';
+  return h;
+};
+CHG.drillsel=function(t){P.drillSel=t.value};
+ACT.mode=function(b){P.mode=b.dataset.m;P.msg='';paint()};
+ACT.weakdrill=function(b){P.mode='drill';P.drillSel='obj:'+b.dataset.id;startSess()};
+function startSess(){
+  P.msg='';
+  if(!P.drillSel&&M.questions[0]) P.drillSel='obj:'+M.questions[0].obj;
+  if(P.mode==='drill'){
+    var p=P.drillSel.split(':'), t=p[0], v=p[1];
+    var pool=M.questions.filter(function(q){return t==='obj'?q.obj===v:qSub(q)===v});
+    if(!pool.length){P.msg='No questions for that choice yet.';return paint()}
+    P.sess={kind:'drill',label:t==='obj'?'Objective '+v:'Subarea '+v,items:shuffle(pool).map(mkItem),i:0,done:false};
+  }else{
+    var W=P.mode==='diag'?{I:3,II:7,III:5,IV:5}:{I:11,II:32,III:21,IV:21}, pick=[], short=[];
+    Object.keys(W).forEach(function(k){
+      var pool=M.questions.filter(function(q){return qSub(q)===k});
+      if(pool.length<W[k]) short.push(k+': '+pool.length+' of '+W[k]);
+      pick=pick.concat(shuffle(pool).slice(0,W[k]));
+    });
+    if(!pick.length){P.msg='There are no questions to build this test yet.';return paint()}
+    P.sess={kind:P.mode,items:shuffle(pick).map(mkItem),i:0,done:false,confirm:false,
+      note:short.length?'The question bank has fewer questions than the target ('+short.join('; ')+'). All available questions are included.':'',
+      endAt:P.mode==='mock'?Date.now()+3*3600*1000:0};
+  }
+  paint(); window.scrollTo(0,0);
+}
+ACT.start=startSess;
+
+function choicesHtml(it,reveal){
+  return it.perm.map(function(orig,i){
+    var cls='',tag='';
+    if(reveal){
+      if(orig===it.q.answer){cls=' right';tag='<span class="tag">Correct</span>'}
+      else if(it.pick===i){cls=' wrong';tag='<span class="tag">Your answer</span>'}
+      if(orig===it.q.answer&&it.pick===i) tag='<span class="tag">Your answer · correct</span>';
+    }
+    return '<button class="choice'+cls+'" id="ch-'+i+'" data-act="pick" data-i="'+i+'" aria-pressed="'+(it.pick===i)+'"'+(reveal?' aria-disabled="true"':'')+'><span class="lt">'+LET[i]+'</span><span class="ct">'+it.q.choices[orig]+'</span>'+tag+'</button>';
+  }).join('');
+}
+function qCard(it,reveal){
+  var h='<section class="card" id="qtop" tabindex="-1"><p class="kick mono">Objective '+it.q.obj+'</p><div class="qtext">'+it.q.q+'</div><div class="choices" role="group" aria-label="Answer choices">'+choicesHtml(it,reveal)+'</div>';
+  if(reveal){
+    h+='<p class="verdict '+(right(it)?'ok':'no')+'" role="status">'+(right(it)?'Correct.':'Not quite.')+'</p><div class="why"><strong>Why:</strong> '+(it.q.why||'')+'</div>';
+  }
+  return h+'</section>';
+}
+function drillView(s){
+  var it=s.items[s.i], n=s.items.length, sc=s.items.filter(right).length, last=s.i===n-1;
+  return '<h2>Drill</h2><div class="row between"><span class="mono">'+s.label+' · Q '+(s.i+1)+'/'+n+' · score '+sc+'/'+s.items.filter(function(x){return x.pick!=null}).length+'</span><button class="btn ghost" data-act="back">Leave drill</button></div>'+qCard(it,it.pick!=null)+
+    (it.pick!=null?'<div class="row"><button class="btn primary" id="b-next" data-act="next">'+(last?'Finish drill':'Next question')+'</button></div>':'');
+}
+function drillDone(s){
+  var sc=s.items.filter(right).length, n=s.items.length;
+  return '<h2>Drill finished</h2><div class="card"><div class="score">'+sc+'/'+n+'</div><p>'+pct(sc,n)+'% correct on '+s.label+'.</p><div class="row"><button class="btn primary" data-act="start">Drill again</button><button class="btn" data-act="back">Back to practice</button></div></div>';
+}
+function examView(s){
+  var it=s.items[s.i], n=s.items.length;
+  var ans=s.items.filter(function(x){return x.pick!=null}).length, fl=s.items.filter(function(x){return x.flag}).length;
+  var h='<div class="exambar"><span class="mono">'+(s.kind==='mock'?'Full mock':'Diagnostic')+' · Q '+(s.i+1)+'/'+n+' · '+ans+' answered</span>';
+  if(s.kind==='mock') h+='<span class="timer mono" id="timer" role="timer" aria-label="Time left">'+fmtT(s.endAt-Date.now())+'</span>';
+  h+='<span class="row"><button class="btn" id="b-flag" data-act="flag" aria-pressed="'+it.flag+'">'+(it.flag?'Flagged':'Flag for review')+'</button><button class="btn primary" id="b-submit" data-act="submit">Submit</button></span></div>';
+  if(s.note) h+='<p class="note">'+s.note+'</p>';
+  if(s.confirm) h+='<div class="card confirm" role="group" aria-label="Confirm submit"><p><strong>Submit the test?</strong> Unanswered: <span class="mono">'+(n-ans)+'</span>. Flagged: <span class="mono">'+fl+'</span>. You cannot change answers after you submit.</p><div class="row"><button class="btn primary" id="b-yes" data-act="finish">Yes, submit</button><button class="btn" id="b-keep" data-act="cancel">Keep working</button></div></div>';
+  h+='<div class="navgrid" role="group" aria-label="Question navigator">'+s.items.map(function(x,j){
+    return '<button class="qn'+(j===s.i?' cur':'')+(x.pick!=null?' ans':'')+(x.flag?' flag':'')+'" data-act="jump" data-i="'+j+'" aria-label="Question '+(j+1)+(x.pick!=null?', answered':', not answered')+(x.flag?', flagged':'')+'"'+(j===s.i?' aria-current="true"':'')+'>'+(j+1)+'</button>';
+  }).join('')+'</div><p class="legend">Filled = answered. Red underline = flagged. Dark outline = current.</p>';
+  h+=qCard(it,false);
+  h+='<div class="row between"><button class="btn" id="b-prev" data-act="prev"'+(s.i===0?' disabled':'')+'>Previous</button><button class="btn" id="b-nx" data-act="next"'+(s.i===n-1?' disabled':'')+'>Next</button></div>';
+  return h;
+}
+ACT.pick=function(b){
+  var s=P.sess; if(!s||s.done) return; var it=s.items[s.i], i=+b.dataset.i;
+  if(s.kind==='drill'){ if(it.pick!=null) return; it.pick=i; }
+  else it.pick=(it.pick===i?null:i);
+  paint();
+  if(s.kind==='drill'){var nx=$('#b-next'); if(nx) nx.focus()}
+};
+ACT.next=function(){
+  var s=P.sess; if(!s) return;
+  if(s.kind==='drill'){ if(s.i<s.items.length-1) s.i++; else s.done=true; }
+  else if(s.i<s.items.length-1) s.i++;
+  paint(); topOfQ();
+};
+ACT.prev=function(){var s=P.sess;if(s&&s.i>0){s.i--;paint();topOfQ()}};
+ACT.jump=function(b){var s=P.sess;if(s){s.i=+b.dataset.i;paint();topOfQ()}};
+ACT.flag=function(){var s=P.sess;if(s){s.items[s.i].flag=!s.items[s.i].flag;paint();var f=$('#b-flag');if(f)f.focus()}};
+ACT.submit=function(){var s=P.sess;if(s){s.confirm=true;paint();var k=$('#b-keep');if(k)k.focus()}};
+ACT.cancel=function(){var s=P.sess;if(s){s.confirm=false;paint()}};
+ACT.finish=function(){var s=P.sess;if(s){finish(s);paint();window.scrollTo(0,0)}};
+ACT.back=function(){P.sess=null;P.msg='';paint();window.scrollTo(0,0)};
+function topOfQ(){var q=$('#qtop');if(q){q.scrollIntoView({block:'start'});q.focus({preventScroll:true})}}
+function finish(s){
+  if(s.done) return; s.done=true; s.confirm=false;
+  var st=LS.get('stats',{});
+  s.items.forEach(function(it){var o=st[it.q.obj]||(st[it.q.obj]={c:0,a:0});o.a++;if(right(it))o.c++});
+  LS.set('stats',st);
+}
+function results(s){
+  var n=s.items.length, c=s.items.filter(right).length;
+  var subs={}, objs={};
+  s.items.forEach(function(it){
+    var k=qSub(it.q)||'?', o=it.q.obj, r=right(it)?1:0;
+    var a=subs[k]||(subs[k]={c:0,a:0}); a.a++; a.c+=r;
+    var b=objs[o]||(objs[o]={c:0,a:0}); b.a++; b.c+=r;
+  });
+  var h='<h2>'+(s.kind==='mock'?'Full mock results':'Diagnostic results')+'</h2><div class="card"><div class="score">'+pct(c,n)+'%</div><p class="mono">'+c+' of '+n+' correct · unanswered questions count as wrong</p></div>';
+  h+='<h3>By subarea</h3>'+Object.keys(subs).sort().map(function(k){
+    var v=subs[k], p=pct(v.c,v.a);
+    return '<div class="sbar"><span>'+k+(SUBS[k]?'. '+SUBS[k].n:'')+'</span><span class="mono">'+p+'% ('+v.c+'/'+v.a+')</span>'+barHtml(v.c,v.a,'','Subarea '+k+' score')+'</div>';
+  }).join('');
+  var rows=Object.keys(objs).map(function(id){return {id:id,c:objs[id].c,a:objs[id].a,p:pct(objs[id].c,objs[id].a)}}).sort(function(x,y){return x.p-y.p||y.a-x.a});
+  h+='<h3>Objectives, weakest first</h3><div class="tbl"><table><thead><tr><th>Objective</th><th>Correct</th><th>%</th></tr></thead><tbody>'+rows.map(function(r){
+    return '<tr><td><button class="chip mono" data-act="weakdrill" data-id="'+r.id+'">'+r.id+'</button> '+((byId[r.id]||{}).title||'')+'</td><td class="mono">'+r.c+'/'+r.a+'</td><td class="mono">'+r.p+'%</td></tr>';
+  }).join('')+'</tbody></table></div>';
+  h+='<p class="note">Practice % is a rough guide. The real test uses a scaled score (pass = 240). Aim for 75%+ here before test day.</p>';
+  h+='<div class="row"><button class="btn primary" data-act="back">Back to practice</button></div>';
+  h+='<h3>Review every question</h3><ol class="rv">'+s.items.map(function(it){
+    var ok=right(it), you=it.pick==null?'No answer':LET[it.pick]+'. '+it.q.choices[it.perm[it.pick]], cor=LET[it.perm.indexOf(it.q.answer)]+'. '+it.q.choices[it.q.answer];
+    return '<li class="'+(ok?'ok':'no')+'"><p class="kick mono">Objective '+it.q.obj+' · '+(ok?'Correct':'Wrong')+'</p><div>'+it.q.q+'</div><p><strong>Your choice:</strong> '+you+'</p>'+(ok?'':'<p><strong>Correct answer:</strong> <span class="mark">'+cor+'</span></p>')+'<div class="why"><strong>Why:</strong> '+(it.q.why||'')+'</div></li>';
+  }).join('')+'</ol>';
+  return h;
+}
+
+/* ---------- Open response ---------- */
+var OT={};
+function orBtn(id){var o=OT[id];return o.run?'Pause':(o.left<=0?'Time is up':(o.left<1800?'Resume':'Start 30:00 timer'))}
+R.open=function(){
+  if(!M.openResponse.length) return '<h2>Open response</h2>'+empty('The open-response tasks are not loaded yet.');
+  var h='<h2>Open response</h2><div class="card"><h3 style="margin-top:0">How to write a 4</h3><ul>'+
+    '<li>Answer every bullet in order, and label each part.</li><li>Define your variables.</li><li>Show every step.</li><li>Label the graph: axes, units and key points.</li><li>State the final answer in a sentence with units.</li><li>Explain what a parameter change does.</li></ul></div>';
+  var chk=LS.get('orchk',{});
+  M.openResponse.forEach(function(t){
+    var o=OT[t.id]||(OT[t.id]={left:(t.minutes||30)*60,run:false});
+    h+='<article class="card" id="or-'+t.id+'"><p class="kick mono">Objective '+t.objective+' · '+(t.minutes||30)+' minutes</p><h2 style="margin-top:2px">'+t.title+'</h2><div class="prose">'+t.prompt+'</div><ol>'+(t.tasks||[]).map(function(x){return '<li>'+x+'</li>'}).join('')+'</ol>'+
+      '<div class="row"><span class="ortimer mono" data-ortime="'+t.id+'" role="timer">'+fmtS(o.left)+'</span><button class="btn" data-act="ortimer" data-id="'+t.id+'">'+orBtn(t.id)+'</button><button class="btn ghost" data-act="orreset" data-id="'+t.id+'">Reset timer</button><span class="muted">Optional.</span></div>'+
+      '<label class="lbl" for="draft-'+t.id+'">Your draft (saved on this device)</label><textarea id="draft-'+t.id+'" data-inp="draft" data-id="'+t.id+'" placeholder="Write your response here. Label each part.">'+esc(LS.get('draft:'+t.id,''))+'</textarea>'+
+      '<details class="rubricbox"><summary class="btn ghost" style="display:inline-block">Official rubric: score 4, 3, 2, 1</summary><div class="tbl"><table class="rubric"><thead><tr><th>Score</th><th>Traits: Purpose · Subject knowledge · Support · Rationale</th></tr></thead><tbody>'+RUB.map(function(r){return '<tr><td>'+r[0]+'</td><td>'+r[1]+'</td></tr>'}).join('')+'</tbody></table></div><p class="muted">Purpose: does the response do what the task asks. Subject knowledge: accurate math. Support: work and examples. Rationale: clear reasoning.</p></details>'+
+      '<h3>Self-check</h3><ul class="checks">'+(t.checklist||[]).map(function(x,i){var k=t.id+'#'+i;return '<li><label for="ck-'+t.id+'-'+i+'"><input type="checkbox" id="ck-'+t.id+'-'+i+'" data-chg="orchk" data-k="'+k+'"'+(chk[k]?' checked':'')+'><span>'+x+'</span></label></li>'}).join('')+'</ul>'+
+      '<div class="row"><button class="btn" id="mbtn-'+t.id+'" data-act="ormodel" data-id="'+t.id+'" aria-expanded="false">Show model answer</button></div><div class="model" id="model-'+t.id+'" hidden>'+t.modelAnswer+'</div></article>';
+  });
+  return h;
+};
+CHG.orchk=function(t){var d=LS.get('orchk',{});if(t.checked)d[t.dataset.k]=1;else delete d[t.dataset.k];LS.set('orchk',d)};
+ACT.ormodel=function(b){
+  var m=$('#model-'+b.dataset.id); m.hidden=!m.hidden;
+  b.textContent=m.hidden?'Show model answer':'Hide model answer'; b.setAttribute('aria-expanded',String(!m.hidden));
+  if(!m.hidden) typeset(m);
+};
+ACT.ortimer=function(b){var o=OT[b.dataset.id];if(o.left<=0)return;o.run=!o.run;b.textContent=orBtn(b.dataset.id)};
+ACT.orreset=function(b){
+  var id=b.dataset.id, t=M.openResponse.filter(function(x){return x.id===id})[0], o=OT[id];
+  o.run=false;o.left=((t&&t.minutes)||30)*60;
+  $$('[data-ortime="'+id+'"]').forEach(function(e){e.textContent=fmtS(o.left)});
+  var tb=$('[data-act="ortimer"][data-id="'+id+'"]'); if(tb) tb.textContent=orBtn(id);
+};
+
+/* ---------- Links ---------- */
+R.links=function(){
+  if(!M.links.length) return '<h2>Links</h2>'+empty('The link list is not loaded yet.');
+  return '<h2>Links</h2>'+M.links.map(function(g){
+    return '<section class="card linkgrp"><h3 style="margin-top:0">'+g.group+'</h3><ul>'+(g.items||[]).map(function(it){
+      return '<li><a href="'+it.u+'" target="_blank" rel="noopener">'+it.t+'</a>'+(it.note?'<div class="muted">'+it.note+'</div>':'')+((it.objs||[]).length?'<div>'+it.objs.map(function(id){return '<button class="chip mono" data-act="goobj" data-id="'+id+'">'+id+'</button>'}).join(' ')+'</div>':'')+'</li>';
+    }).join('')+'</ul></section>';
+  }).join('');
+};
+
+/* ---------- Shell ---------- */
+function render(){
+  var v=$('#view'); v.innerHTML=R[cur](); if(cur==='concepts') mountVis(v);
+  $$('.tab').forEach(function(b){b.setAttribute('aria-current',b.dataset.tab===cur?'page':'false')});
+  typeset(v);
+}
+function paint(){var y=window.scrollY;render();window.scrollTo(0,y)}
+function show(t){
+  if(!R[t]) t='plan';
+  cur=t;
+  try{if(location.hash!=='#'+t) location.hash=t}catch(e){}
+  render(); window.scrollTo(0,0);
+  var a=$('.tab[aria-current="page"]'); if(a&&a.scrollIntoView) a.scrollIntoView({block:'nearest',inline:'nearest'});
+}
+ACT.tab=function(b){show(b.dataset.tab)};
+
+document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-act]');if(b&&ACT[b.dataset.act])ACT[b.dataset.act](b,e)});
+document.addEventListener('change',function(e){var t=e.target;if(t.dataset&&t.dataset.chg&&CHG[t.dataset.chg])CHG[t.dataset.chg](t)});
+document.addEventListener('input',function(e){var t=e.target;if(t.dataset&&t.dataset.inp==='draft')LS.set('draft:'+t.dataset.id,t.value)});
+document.addEventListener('keydown',function(e){
+  if(cur==='cards'&&(e.key===' '||e.code==='Space')&&!(e.target.closest&&e.target.closest('input,select,textarea,button,a,summary'))){e.preventDefault();ACT.flip()}
+});
+window.addEventListener('hashchange',function(){var t=location.hash.slice(1);if(t!==cur&&R[t])show(t)});
+
+setInterval(function(){
+  var s=P.sess;
+  if(s&&s.kind==='mock'&&!s.done){
+    var left=s.endAt-Date.now(), t=$('#timer');
+    if(t){t.textContent=fmtT(left);t.classList.toggle('low',left<600000)}
+    if(left<=0){finish(s);if(cur==='practice')paint()}
+  }
+  Object.keys(OT).forEach(function(id){
+    var o=OT[id]; if(!o.run) return;
+    o.left--; if(o.left<=0){o.left=0;o.run=false}
+    $$('[data-ortime="'+id+'"]').forEach(function(e){e.textContent=fmtS(o.left)});
+    if(!o.run){var b=$('[data-act="ortimer"][data-id="'+id+'"]');if(b)b.textContent=orBtn(id)}
+  });
+},1000);
+
+$('#tabs').innerHTML=TABS.map(function(t){return '<button class="tab" id="tab-'+t[0]+'" data-act="tab" data-tab="'+t[0]+'">'+t[1]+'</button>'}).join('');
+var h0=''; try{h0=location.hash.slice(1)}catch(e){}
+show(R[h0]?h0:'plan');
+window.scrollTo(0,0);
+})();
+</script>
